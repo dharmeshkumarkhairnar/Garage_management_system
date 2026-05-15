@@ -16,9 +16,9 @@ type Customers struct {
 
 type Vehicles struct {
 	ID          uint64    `gorm:"column:id;primarykey" json:"id"`
-	CustomerID  string    `gorm:"column:name" json:"name"`
-	NumberPlate string    `gorm:"column:email;uniqueIndex" json:"email"`
-	Model       string    `gorm:"column:phone" json:"phone"`
+	CustomerID  string    `gorm:"column:customer_id" json:"customer_id"`
+	NumberPlate string    `gorm:"column:number_plate;uniqueIndex" json:"number_plate"`
+	Model       string    `gorm:"column:model" json:"model"`
 	Created_at  time.Time `gorm:"column:created_at" json:"created_at"`
 
 	CustId Customers `gorm:"foreignkey:CustomerID;references:ID"`
