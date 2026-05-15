@@ -3,8 +3,8 @@ package database
 import (
 	"errors"
 	"fmt"
-	constant "garage-system/constants"
-	"garage-system/models"
+	constant "garage_management_system/src/constants"
+	"garage_management_system/src/models"
 	"sync"
 
 	"gorm.io/driver/postgres"

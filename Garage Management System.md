@@ -76,6 +76,7 @@ A Garage Management System is used to manage customers, their vehicles, mechanic
 |--------|------|-------------|
 | `id` | Integer | Primary Key |
 | `name` | String | - |
+| `phone` | String | Unique |
 
 ---
 
