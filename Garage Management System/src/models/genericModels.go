@@ -1,4 +1,4 @@
-package model
+package models
 
 type ErrorMessage struct {
 	Key          string `json:"key,omitempty"`

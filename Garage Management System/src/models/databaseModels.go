@@ -1,4 +1,4 @@
-package model
+package models
 
 import (
 	"time"
@@ -7,7 +7,7 @@ import (
 )
 
 type Customers struct {
-	ID         uint64    `gorm:"column:id;primarykey" json:"id"`
+	ID         uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	Name       string    `gorm:"column:name" json:"name"`
 	Email      string    `gorm:"column:email;uniqueIndex" json:"email"`
 	Phone      string    `gorm:"column:phone" json:"phone"`
@@ -15,7 +15,7 @@ type Customers struct {
 }
 
 type Vehicles struct {
-	ID          uint64    `gorm:"column:id;primarykey" json:"id"`
+	ID          uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	CustomerID  string    `gorm:"column:customer_id" json:"customer_id"`
 	NumberPlate string    `gorm:"column:number_plate;uniqueIndex" json:"number_plate"`
 	Model       string    `gorm:"column:model" json:"model"`
@@ -25,19 +25,19 @@ type Vehicles struct {
 }
 
 type Mechanics struct {
-	ID    uint64 `gorm:"column:id;primarykey" json:"id"`
+	ID    uint64 `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	Name  string `gorm:"column:name" json:"name"`
 	Phone string `gorm:"column:phone" json:"phone"`
 }
 
 type ServiceMaster struct {
-	ID      uint64  `gorm:"column:id;primarykey" json:"id"`
+	ID      uint64  `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	Service string  `gorm:"column:service; not null" json:"service"`
 	Amount  float64 `gorm:"column:amount" json:"amount"`
 }
 
 type VisitRecords struct {
-	ID           uint64    `gorm:"column:id;primarykey" json:"id"`
+	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
 	MechanicID   uint64    `gorm:"column:mechanic_id;uniqueIndex" json:"mechanic_id"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
@@ -48,9 +48,9 @@ type VisitRecords struct {
 }
 
 type VisitServices struct {
-	ID              uint64 `gorm:"column:id;primarykey" json:"id"`
-	VisitRecordID   uint64 `gorm:"column:visit_record_id" json:"visit_record_id"`
-	ServiceMasterID uint64 `gorm:"column:service_master_id" json:"service_master_id"`
+	ID              uint64 `gorm:"column:id;primarykey;autoIncrement" json:"id"`
+	VisitRecordID   uint64 `gorm:"column:visit_record_id;uniqueIndex:idx_unique_rec" json:"visit_record_id"`
+	ServiceMasterID uint64 `gorm:"column:service_master_id;uniqueIndex:idx_unique_rec" json:"service_master_id"`
 
 	VisitRecord_ID   VisitRecords  `gorm:"foreignkey:VisitRecordID;references:ID"`
 	ServiceMaster_ID ServiceMaster `gorm:"foreignkey:ServiceMasterID;references:ID"`
