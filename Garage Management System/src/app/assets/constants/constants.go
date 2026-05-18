@@ -2,12 +2,12 @@ package constants
 
 //Table related constants
 const (
-	VehiclesTableName = "vehicles"
+	MechanicsTableName = "mechanics"
 )
 
 //Success
 const (
-	VehicleCreationSuccess = "vehicle created successfully"
+	MechanicAddedSuccessfully = "mechanic added successfully"
 )
 
 //constant errors from Database
@@ -22,8 +22,8 @@ const (
 	ErrUnexpectedValue = "unexpected value for the field."
 )
 
-//constants
-const (
-	User        = "user"
-	NumberPlate = "number plate"
+//logger messages
+const(
+	MechanicAddedInDB="mechanic added to DB"
 )
+

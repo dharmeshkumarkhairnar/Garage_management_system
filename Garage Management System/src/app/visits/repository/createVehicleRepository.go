@@ -36,7 +36,7 @@ func (user *createVehicleRepository) CreateVehicle(ctx context.Context, bffCreat
 		Created_at:  time.Now(),
 	}
 
-	result := user.gDB.WithContext(ctx).Table(constants.TableName).Create(&NewVehicle)
+	result := user.gDB.WithContext(ctx).Table(constants.VehiclesTableName).Create(&NewVehicle)
 	if result.Error != nil {
 		if strings.Contains(result.Error.Error(), constants.DuplicateNumberPlateError) {
 			return errors.New(constants.VehicleNumberPlateAlreadyExistsError)

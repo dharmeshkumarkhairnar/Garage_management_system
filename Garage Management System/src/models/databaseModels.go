@@ -26,9 +26,11 @@ type Vehicles struct {
 }
 
 type Mechanics struct {
-	ID    uint64 `gorm:"column:id;primarykey;autoIncrement" json:"id"`
-	Name  string `gorm:"column:name" json:"name"`
-	Phone string `gorm:"column:phone" json:"phone"`
+	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
+	Name         string    `gorm:"column:name" json:"name"`
+	AadharNumber string    `gorm:"column:aadhar_number;uniqueIndex" json:"aadhar_number"`
+	Phone        string    `gorm:"column:phone" json:"phone"`
+	Created_at   time.Time `gorm:"column:created_at" json:"created_at"`
 }
 
 type ServiceMaster struct {
