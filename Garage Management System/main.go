@@ -3,7 +3,6 @@ package main
 import (
 	model "garage_management_system/src/models"
 	"garage_management_system/src/utils/database"
-	"garage_management_system/src/utils/redis"
 	"log"
 )
 
@@ -21,9 +20,9 @@ func main() {
 
 	log.Print("Database migrated successfully")
 
-	err = redis.InitRedis()
-	if err != nil {
-		log.Fatalf("Failed to initialize redis: %v", err)
-	}
+	// err = redis.InitRedis()
+	// if err != nil {
+	// 	log.Fatalf("Failed to initialize redis: %v", err)
+	// }
 
 }
