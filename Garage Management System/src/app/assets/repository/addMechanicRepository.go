@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"garage_management_system/src/app/assets/constants"
 	"garage_management_system/src/app/assets/models"
 	genModels "garage_management_system/src/models"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -23,7 +25,7 @@ func NewAddMechanicRepository(gDB *gorm.DB) *addMechanicRepository {
 	return &addMechanicRepository{gDB: gDB}
 }
 
-func (user *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechaniceRequest models.BFFAddMechanicRequest) error {
+func (repo *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechaniceRequest models.BFFAddMechanicRequest) error {
 
 	logger := logrus.New()
 
@@ -34,13 +36,11 @@ func (user *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechan
 		Created_at:   time.Now(),
 	}
 
-	result := user.gDB.WithContext(ctx).Table(constants.MechanicsTableName).Create(&NewMechanic)
+	result := repo.gDB.WithContext(ctx).Table(constants.MechanicsTableName).Create(&NewMechanic)
 	if result.Error != nil {
-		// if strings.Contains(result.Error.Error(), constants.DuplicateNumberPlateError) {
-		// 	return errors.New(constants.VehicleNumberPlateAlreadyExistsError)
-		// } else if strings.Contains(result.Error.Error(), constants.CustomerNotFoundError) {
-		// 	return errors.New(constants.UserNotFoundError)
-		// }
+		if strings.Contains(result.Error.Error(), constants.DuplicateAadharNumberDBError) {
+			return errors.New(constants.DuplicateAadharNumberError)
+		}
 		return result.Error
 	}
 

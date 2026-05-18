@@ -1,7 +1,7 @@
 package main
 
 import (
-	"garage_management_system/src/app/visits/router"
+	"garage_management_system/src/app/assets/router"
 	"garage_management_system/src/utils/database"
 	"garage_management_system/src/utils/redis"
 	"log"

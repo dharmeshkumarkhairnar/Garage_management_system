@@ -3,17 +3,23 @@ package constants
 //Table related constants
 const (
 	MechanicsTableName = "mechanics"
+	AadharNumber       = "aadhar number"
 )
 
 //Success
 const (
-	MechanicAddedSuccessfully = "mechanic added successfully"
+	MechanicAddedSuccessfully   = "mechanic added successfully"
+	MechanicDeletedSuccessfully = "mechanic deleted successfully"
+)
+
+//database
+const (
+	AadharNumberCondition = "aadhar_number = ?"
 )
 
 //constant errors from Database
 const (
-	DuplicateNumberPlateError = "duplicate key value violates unique constraint \"idx_vehicles_number_plate\""
-	CustomerNotFoundError     = "insert or update on table \"vehicles\" violates foreign key constraint \"fk_vehicles_cust_id\""
+	DuplicateAadharNumberDBError = "duplicate key value violates unique constraint \"idx_mechanics_aadhar_number\""
 )
 
 // Request Validation Errors
@@ -23,7 +29,7 @@ const (
 )
 
 //logger messages
-const(
-	MechanicAddedInDB="mechanic added to DB"
+const (
+	MechanicAddedInDB   = "mechanic added to DB"
+	MechanicDeletedInDB = "mechanic deleted to DB"
 )
-

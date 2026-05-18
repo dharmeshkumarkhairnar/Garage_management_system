@@ -42,7 +42,7 @@ type ServiceMaster struct {
 type VisitRecords struct {
 	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
-	MechanicID   uint64    `gorm:"column:mechanic_id;uniqueIndex" json:"mechanic_id"`
+	MechanicID   uint64    `gorm:"column:mechanic_id" json:"mechanic_id"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
 	DeliveryDate time.Time `gorm:"column:delivery_date;type:date" json:"delivery_date"`
 
