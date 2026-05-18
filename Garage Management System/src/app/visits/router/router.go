@@ -8,12 +8,8 @@ import (
 
 	"garage_management_system/src/utils/database"
 
-	"garage_management_system/src/app/visits/docs"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	files "github.com/swaggo/files"
 )
 
 func GetRouter() *gin.Engine {
@@ -21,8 +17,8 @@ func GetRouter() *gin.Engine {
 	router.Use(gin.Recovery())
 	gdb := database.GetDB().DB
 
-	docs.SwaggerInfo.Title = "Garage management system"
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(files.Handler))
+	// docs.SwaggerInfo.Title = "Garage management system"
+	// router.GET("/swagger/*any", ginSwagger.WrapHandler(files.Handler))
 
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins: true,

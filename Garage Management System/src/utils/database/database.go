@@ -3,15 +3,15 @@ package database
 import (
 	"errors"
 	"fmt"
-	constant "garage_management_system/src/constants"
 	"garage_management_system/src/models"
+	constant "garage_management_system/src/constants"
 	"sync"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var db *model.Database
+var db *models.Database
 var once sync.Once
 
 // InitDB opens a PostgreSQL connection via GORM using DATABASE_URL
@@ -33,7 +33,7 @@ func InitDB() error {
 			return
 		}
 
-		db = &model.Database{
+		db = &models.Database{
 			DB: gdb,
 		}
 	})
@@ -42,6 +42,6 @@ func InitDB() error {
 }
 
 // GetDB returns the shared model.Database. Call InitDB first.
-func GetDB() *model.Database {
+func GetDB() *models.Database {
 	return db
 }
