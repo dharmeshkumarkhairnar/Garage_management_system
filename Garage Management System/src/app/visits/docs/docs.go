@@ -52,6 +52,18 @@ const docTemplate = `{
                             "$ref": "#/definitions/models.ErrorAPIResponse"
                         }
                     },
+                    "404": {
+                        "description": "user not found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Duplicate value in request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -67,13 +79,16 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "customer_id": {
-                    "type": "string"
+                    "type": "integer",
+                    "example": 12
                 },
                 "model": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Dezire"
                 },
                 "number_plate": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "MH19BW3626"
                 }
             }
         },
@@ -81,7 +96,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "status": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "Successfully created"
                 }
             }
         },

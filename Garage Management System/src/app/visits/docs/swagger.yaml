@@ -2,15 +2,19 @@ definitions:
   models.BFFCreateVehicleRequest:
     properties:
       customer_id:
-        type: string
+        example: 12
+        type: integer
       model:
+        example: Dezire
         type: string
       number_plate:
+        example: MH19BW3626
         type: string
     type: object
   models.BFFCreateVehicleResponse:
     properties:
       status:
+        example: Successfully created
         type: string
     type: object
   models.ErrorAPIResponse:
@@ -52,6 +56,14 @@ paths:
             $ref: '#/definitions/models.BFFCreateVehicleResponse'
         "400":
           description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "404":
+          description: user not found
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "409":
+          description: Duplicate value in request
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
         "500":

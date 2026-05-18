@@ -1,13 +1,13 @@
 package models
 
 type BFFCreateVehicleRequest struct {
-	CustomerID  uint64    `json:"customer_id"`
-	NumberPlate string    `json:"number_plate"`
-	Model       string    `json:"model"`
+	CustomerID  uint64    `json:"customer_id" example:"12"`
+	NumberPlate string    `json:"number_plate" example:"MH19BW3626"`
+	Model       string    `json:"model" example:"Dezire"`
 }
 
 type BFFCreateVehicleResponse struct {
-	Status string `json:"status"`
+	Status string `json:"status" example:"Successfully created"`
 }
 
 type ErrorMessage struct {

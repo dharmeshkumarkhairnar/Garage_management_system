@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"garage_management_system/src/app/visits/constants"
 	"garage_management_system/src/app/visits/models"
 	genModels "garage_management_system/src/models"
+	"strings"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -36,6 +38,11 @@ func (user *createVehicleRepository) CreateVehicle(ctx context.Context, bffCreat
 
 	result := user.gDB.WithContext(ctx).Table(constants.TableName).Create(&NewVehicle)
 	if result.Error != nil {
+		if strings.Contains(result.Error.Error(), constants.DuplicateNumberPlateError) {
+			return errors.New(constants.VehicleNumberPlateAlreadyExistsError)
+		} else if strings.Contains(result.Error.Error(), constants.CustomerNotFoundError) {
+			return errors.New(constants.UserNotFoundError)
+		}
 		return result.Error
 	}
 
