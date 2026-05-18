@@ -8,6 +8,12 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	files "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	// "github.com/swaggo/swag/example/basic/docs"
+	"garage_management_system/docs"
+
 	"gorm.io/gorm"
 )
 
@@ -16,8 +22,8 @@ func GetRouter(db *gorm.DB, logger *logrus.Logger) *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	// docs.SwaggerInfo.Title = "garage management system"
-	// router.GET("/swagger/*any", ginSwagger.WrapHandler(files.Handler))
+	docs.SwaggerInfo.Title = "garage management system"
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(files.Handler))
 
 	router.Use(cors.New(cors.Config{
 		AllowAllOrigins: true,
