@@ -3,15 +3,15 @@ package database
 import (
 	"errors"
 	"fmt"
-	constant "garage_management_system/src/constants"
 	"garage_management_system/src/models"
+	constant "garage_management_system/src/constants"
 	"sync"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var db *model.Database
+var db *models.Database
 var once sync.Once
 
 // InitDB opens a PostgreSQL connection via GORM using DATABASE_URL
@@ -21,7 +21,7 @@ func InitDB() error {
 	var initErr error
 
 	once.Do(func() {
-		dsn := fmt.Sprintf(constant.DSNString, "localhost", "5432", "garage_management_system", "postgres", "6414", "Asia/Kolkata")
+		dsn := fmt.Sprintf(constant.DSNString, "localhost", "5432", "garage_management_system", "postgres", "mysql@1715", "Asia/Kolkata")
 		if dsn == "" {
 			initErr = errors.New("DATABASE_URL is not set")
 			return
@@ -33,7 +33,7 @@ func InitDB() error {
 			return
 		}
 
-		db = &model.Database{
+		db = &models.Database{
 			DB: gdb,
 		}
 	})
@@ -42,6 +42,6 @@ func InitDB() error {
 }
 
 // GetDB returns the shared model.Database. Call InitDB first.
-func GetDB() *model.Database {
+func GetDB() *models.Database {
 	return db
 }

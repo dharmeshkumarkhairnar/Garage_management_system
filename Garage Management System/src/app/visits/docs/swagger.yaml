@@ -1,0 +1,64 @@
+definitions:
+  models.BFFCreateVehicleRequest:
+    properties:
+      customer_id:
+        type: string
+      model:
+        type: string
+      number_plate:
+        type: string
+    type: object
+  models.BFFCreateVehicleResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  models.ErrorAPIResponse:
+    properties:
+      error:
+        type: string
+      errors:
+        $ref: '#/definitions/models.ErrorMessage'
+    type: object
+  models.ErrorMessage:
+    properties:
+      errorMessage:
+        type: string
+      key:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/vehicles/create-vehicle:
+    post:
+      consumes:
+      - application/json
+      description: Handles Vehicle registration by validating input and storing Vehicle
+        details
+      parameters:
+      - description: Vehicle Registration Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFCreateVehicleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/models.BFFCreateVehicleResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+      summary: Create a new Vehicle
+      tags:
+      - Vehicles
+swagger: "2.0"
