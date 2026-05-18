@@ -21,7 +21,7 @@ func InitDB() error {
 	var initErr error
 
 	once.Do(func() {
-		dsn := fmt.Sprintf(constant.DSNString, "localhost", "5432", "garage_management_system", "postgres", "6414", "Asia/Kolkata")
+		dsn := fmt.Sprintf(constant.DSNString, "localhost", "5432", "garage_management_system", "postgres", "mysql@1715", "Asia/Kolkata")
 		if dsn == "" {
 			initErr = errors.New("DATABASE_URL is not set")
 			return

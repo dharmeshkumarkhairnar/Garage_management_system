@@ -17,7 +17,7 @@ type Customers struct {
 
 type Vehicles struct {
 	ID          uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
-	CustomerID  string    `gorm:"column:customer_id" json:"customer_id"`
+	CustomerID  uint64    `gorm:"column:customer_id" json:"customer_id"`
 	NumberPlate string    `gorm:"column:number_plate;uniqueIndex" json:"number_plate"`
 	Model       string    `gorm:"column:model" json:"model"`
 	Created_at  time.Time `gorm:"column:created_at" json:"created_at"`

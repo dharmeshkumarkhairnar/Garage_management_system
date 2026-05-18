@@ -27,10 +27,10 @@ func NewCreateVehicleHandler(service *business.CreateVehicleService) *CreaterVeh
 // @Tags Vehicles
 // @Accept json
 // @Produce json
-// @Param request body visitModels.BFFCreateVehicleRequest true "Vehicle Registration Request"
-// @Success 201 {object} visitModels.BFFCreateVehicleResponse "User created successfully"
-// @Failure 400 {object} commonModels.ErrorAPIResponse "Invalid input payload"
-// @Failure 500 {object} commonModels.ErrorAPIResponse "Internal Server Error"
+// @Param request body models.BFFCreateVehicleRequest true "Vehicle Registration Request"
+// @Success 201 {object} models.BFFCreateVehicleResponse "User created successfully"
+// @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
+// @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
 // @Router /api/vehicles/create-vehicle [post]
 func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
 
