@@ -7,11 +7,12 @@ import (
 )
 
 type Customers struct {
-	ID         uint64    `gorm:"column:id;primarykey" json:"id"`
-	Name       string    `gorm:"column:name" json:"name"`
-	Email      string    `gorm:"column:email;uniqueIndex" json:"email"`
-	Phone      string    `gorm:"column:phone" json:"phone"`
-	Created_at time.Time `gorm:"column:created_at" json:"created_at"`
+	ID        uint64    `gorm:"column:id;primarykey" json:"id"`
+	Name      string    `gorm:"column:name" json:"name"`
+	Email     string    `gorm:"column:email;uniqueIndex" json:"email"`
+	Phone     string    `gorm:"column:phone" json:"phone"`
+	Password  string    `gorm:"column:password" json:"password"`
+	CreatedAt time.Time `gorm:"column:created_at" json:"created_at"`
 }
 
 type Vehicles struct {

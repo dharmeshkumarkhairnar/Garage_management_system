@@ -3,10 +3,10 @@ package main
 import (
 	"garage_management_system/src/app/authentication/router"
 	"garage_management_system/src/utils/database"
-	"garage_management_system/src/utils/redis"
 	"log"
 
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -15,17 +15,21 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	err = redis.InitRedis()
-	if err != nil {
-		log.Fatalf("Failed to initialize redis: %v", err)
-	}
+	// err = redis.InitRedis()
+	// if err != nil {
+	// 	log.Fatalf("Failed to initialize redis: %v", err)
+	// }
+	db := database.GetDB()
 
-	startRouter()
+	logger := logrus.New()
+	logger.SetFormatter(&logrus.JSONFormatter{
+		PrettyPrint: true,
+	})
+	
+	startRouter(db.DB, logger)
 }
 
-func startRouter() {
-	logger := logrus.New()
-	router := router.GetRouter()
-	logger.Info("")
+func startRouter(db *gorm.DB, logger *logrus.Logger) {
+	router := router.GetRouter(db, logger)
 	router.Run(":8080")
 }
