@@ -24,6 +24,18 @@ func NewCreateCustomer(service *business.CreateCustomer) *CreateCustomer {
 	}
 }
 
+// HandlerCreaterCustomer handles the customer creation request.
+// @Summary Create a new customer
+// @Description Handles customer registration by validating input and storing user details
+// @Tags Customer
+// @Accept json
+// @Produce json
+// @Param request body models.BFFCreateCustomerRequest true "Customer Registration Request"
+// @Success 201 {string} string "Customer created successfully"
+// @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
+// @Failure 409 {object} models.ErrorAPIResponse "User already exists"
+// @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
+// @Router /api/auth/register/customer [post]
 func (controller *CreateCustomer) HandleCreateCustomer(ctx *gin.Context) {
 	var bffCreateCustomerRequest models.BFFCreateCustomerRequest
 
@@ -48,7 +60,7 @@ func (controller *CreateCustomer) HandleCreateCustomer(ctx *gin.Context) {
 
 	err := controller.service.CreateNewCustomer(ctx.Request.Context(), bffCreateCustomerRequest)
 	if err != nil {
-		if strings.Contains(err.Error(), constants.ErrDuplicateEntry) {	
+		if strings.Contains(err.Error(), constants.ErrDuplicateEntry) {
 			errorResponse := genericModels.ErrorAPIResponse{
 				Message: genericModels.ErrorMessage{
 					Key:          strings.Split(err.Error(), constants.ErrDuplicateEntry)[0],

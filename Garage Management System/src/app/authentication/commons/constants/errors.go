@@ -39,7 +39,7 @@ const (
 )
 
 const (
-	ErrHashingPassword      = "error hashing password: %w"
+	ErrHashingPassword = "error hashing password: %w"
 )
 
 //header-token
@@ -69,11 +69,9 @@ const (
 // Database Constraint & Index Names
 const (
 	ErrUniqueConstraintViolation = "duplicate key value violates unique constraint"
-	IndexUsersPanCard            = "idx_users_pan_card"
-	IndexUsersEmail              = "idx_users_email"
+	IndexCustomerssPanCard       = "idx_customers_pan_card"
+	IndexCustomersEmail          = "idx_customers_email"
 )
-
-
 
 // Duplicate Entry Errors
 const (

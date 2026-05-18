@@ -9,6 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
+// @title Authentication Service API
+// @version 1.0
+// @description Authentication APIs for Garage Management System
+// @query.collection.format multi
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @x-extension-openapi {"example": "value on a json format"}
 func main() {
 	err := database.InitDB()
 	if err != nil {
@@ -25,7 +33,7 @@ func main() {
 	logger.SetFormatter(&logrus.JSONFormatter{
 		PrettyPrint: true,
 	})
-	
+
 	startRouter(db.DB, logger)
 }
 
