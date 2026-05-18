@@ -35,7 +35,7 @@ type Mechanics struct {
 
 type ServiceMaster struct {
 	ID      uint64  `gorm:"column:id;primarykey;autoIncrement" json:"id"`
-	Service string  `gorm:"column:service; not null" json:"service"`
+	Service string  `gorm:"column:service; uniqueIndex; not null" json:"service"`
 	Amount  float64 `gorm:"column:amount" json:"amount"`
 }
 

@@ -3,7 +3,6 @@ package main
 import (
 	"garage_management_system/src/app/visits/router"
 	"garage_management_system/src/utils/database"
-	"garage_management_system/src/utils/redis"
 	"log"
 
 	"github.com/sirupsen/logrus"
@@ -15,10 +14,10 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	err = redis.InitRedis()
-	if err != nil {
-		log.Fatalf("Failed to initialize redis: %v", err)
-	}
+	// err = redis.InitRedis()
+	// if err != nil {
+	// 	log.Fatalf("Failed to initialize redis: %v", err)
+	// }
 
 	startRouter()
 }

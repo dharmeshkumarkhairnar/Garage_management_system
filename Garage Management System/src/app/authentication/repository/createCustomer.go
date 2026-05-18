@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 
@@ -56,11 +55,10 @@ func (repo *createCustomer) CreateNewCustomer(ctx context.Context, db *gorm.DB, 
 	result := db.WithContext(ctx).Create(&NewCustomer)
 	if result.Error != nil {
 		errorMsgs := result.Error.Error()
+
 		if strings.Contains(errorMsgs, constants.ErrUniqueConstraintViolation) {
 			duplicateKeys := []string{}
-			// 	if strings.Contains(errorMsgs, constants.IndexCustomersPanCard) {
-			// 		duplicateKeys = append(duplicateKeys, constants.FieldPanCard)
-			// 	}
+
 			if strings.Contains(errorMsgs, constants.IndexCustomersEmail) {
 				duplicateKeys = append(duplicateKeys, constants.FieldEmail)
 			}
@@ -68,10 +66,8 @@ func (repo *createCustomer) CreateNewCustomer(ctx context.Context, db *gorm.DB, 
 			if len(duplicateKeys) > 0 {
 				return errors.New(strings.Join(duplicateKeys, ",") + constants.ErrDuplicateEntry)
 			}
-
-			// return errors.New(constants.ErrUsernameExists)
 		}
-		fmt.Println("err in repo:", result.Error)
+
 		return result.Error
 	}
 
