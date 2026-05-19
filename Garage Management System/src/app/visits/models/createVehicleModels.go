@@ -1,7 +1,6 @@
 package models
 
 type BFFCreateVehicleRequest struct {
-	CustomerID  uint64    `json:"customer_id" example:"12"`
 	NumberPlate string    `json:"number_plate" example:"MH19BW3626"`
 	Model       string    `json:"model" example:"Dezire"`
 }

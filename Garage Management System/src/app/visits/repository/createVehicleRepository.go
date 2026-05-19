@@ -14,7 +14,7 @@ import (
 )
 
 type CreateVehicleRepository interface {
-	CreateVehicle(ctx context.Context, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error
+	CreateVehicle(ctx context.Context, userID uint64, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error
 }
 
 type createVehicleRepository struct {
@@ -25,12 +25,12 @@ func NewCreateVehicleRepository(gDB *gorm.DB) *createVehicleRepository {
 	return &createVehicleRepository{gDB: gDB}
 }
 
-func (user *createVehicleRepository) CreateVehicle(ctx context.Context, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error {
+func (user *createVehicleRepository) CreateVehicle(ctx context.Context, userID uint64, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error {
 
 	logger := logrus.New()
 
 	NewVehicle := genModels.Vehicles{
-		CustomerID:  bffCreateVehicleRequest.CustomerID,
+		CustomerID:  userID,
 		NumberPlate: bffCreateVehicleRequest.NumberPlate,
 		Model:       bffCreateVehicleRequest.Model,
 		Created_at:  time.Now(),

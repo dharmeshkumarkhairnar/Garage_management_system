@@ -38,6 +38,8 @@ func NewCreateVehicleHandler(service *business.CreateVehicleService) *CreaterVeh
 // @Router /api/vehicles/create-vehicle [post]
 func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
 
+	userID:=ctx.GetUint64(constants.UserId)
+
 	var bffCreateVehicleRequest visitModels.BFFCreateVehicleRequest
 
 	if err := ctx.ShouldBind(&bffCreateVehicleRequest); err != nil {
@@ -55,7 +57,7 @@ func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
 	// 	return
 	// }
 
-	err := controller.service.CreateVehicle(ctx, ctx.Request.Context(), bffCreateVehicleRequest)
+	err := controller.service.CreateVehicle(ctx, userID , ctx.Request.Context(), bffCreateVehicleRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), constants.VehicleNumberPlateAlreadyExistsError) {
 			errorMsg := models.ErrorMessage{Key: "number plate", ErrorMessage: constants.VehicleNumberPlateAlreadyExistsError}
