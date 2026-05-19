@@ -2,6 +2,7 @@ package main
 
 import (
 	model "garage_management_system/src/models"
+	"garage_management_system/src/utils"
 	"garage_management_system/src/utils/database"
 	"log"
 )
@@ -14,11 +15,13 @@ func main() {
 
 	db := database.GetDB().DB
 
-	if err := db.AutoMigrate(&model.Customers{}, &model.Vehicles{}, &model.Mechanics{}, &model.ServiceMaster{}, &model.VisitRecords{}, &model.VisitServices{}); err != nil {
+	if err := db.AutoMigrate(&model.Users{}, &model.Vehicles{}, &model.Mechanics{}, &model.ServiceMaster{}, &model.VisitRecords{}, &model.VisitServices{}); err != nil {
 		log.Fatalf("error in automigrating schema: %s", err.Error())
 	}
 
 	log.Print("Database migrated successfully")
+
+	utils.InitJWTConfig()
 
 	// err = redis.InitRedis()
 	// if err != nil {

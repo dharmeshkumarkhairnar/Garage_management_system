@@ -6,11 +6,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type Customers struct {
+type Users struct {
 	ID        uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	Name      string    `gorm:"column:name" json:"name"`
 	Email     string    `gorm:"column:email;uniqueIndex" json:"email"`
 	Phone     uint64    `gorm:"column:phoneNumber" json:"phoneNumber"`
+	Role      string    `gorm:"column:role;default:customer" json:"role"`
 	Password  string    `gorm:"column:password" json:"password"`
 	CreatedAt time.Time `gorm:"column:created_at" json:"created_at"`
 }
@@ -22,7 +23,7 @@ type Vehicles struct {
 	Model       string    `gorm:"column:model" json:"model"`
 	Created_at  time.Time `gorm:"column:created_at" json:"created_at"`
 
-	CustId Customers `gorm:"foreignkey:CustomerID;references:ID"`
+	CustId Users `gorm:"foreignkey:CustomerID;references:ID"`
 }
 
 type Mechanics struct {
@@ -42,7 +43,7 @@ type ServiceMaster struct {
 type VisitRecords struct {
 	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
-	MechanicID   uint64    `gorm:"column:mechanic_id;uniqueIndex" json:"mechanic_id"`
+	MechanicID   uint64    `gorm:"column:mechanic_id" json:"mechanic_id"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
 	DeliveryDate time.Time `gorm:"column:delivery_date;type:date" json:"delivery_date"`
 

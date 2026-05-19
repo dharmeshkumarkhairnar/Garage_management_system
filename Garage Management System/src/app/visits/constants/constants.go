@@ -27,3 +27,17 @@ const (
 	User        = "user"
 	NumberPlate = "number plate"
 )
+
+//middlware constants
+const (
+	Admin         = "admin"
+	Header        = "header"
+	Token         = "token"
+	Subject       = "sub"
+	UserRole      = "role"
+	UserId        = "user_id"
+	Authorization = "Authorization"
+	Bearer        = "Bearer "
+	ActiveToken   = "ACTIVE_TOKEN_%s"
+	Redis         = "redis"
+)

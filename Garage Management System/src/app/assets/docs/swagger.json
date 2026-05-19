@@ -4,9 +4,9 @@
         "contact": {}
     },
     "paths": {
-        "/api/vehicles/create-vehicle": {
+        "/api/vehicles/add-mechanic": {
             "post": {
-                "description": "Handles Vehicle registration by validating input and storing Vehicle details",
+                "description": "Handles mechanic add request by validating input and storing mechanics details",
                 "consumes": [
                     "application/json"
                 ],
@@ -14,35 +14,29 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Vehicles"
+                    "Mechanics"
                 ],
-                "summary": "Create a new Vehicle",
+                "summary": "Adds new mechanic",
                 "parameters": [
                     {
-                        "description": "Vehicle Registration Request",
+                        "description": "mechanic add Request",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.BFFCreateVehicleRequest"
+                            "$ref": "#/definitions/models.BFFAddMechanicRequest"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "User created successfully",
+                        "description": "mechanic added successfully",
                         "schema": {
-                            "$ref": "#/definitions/models.BFFCreateVehicleResponse"
+                            "$ref": "#/definitions/models.BFFAddMechanicResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid input payload",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorAPIResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "user not found",
                         "schema": {
                             "$ref": "#/definitions/models.ErrorAPIResponse"
                         }
@@ -54,7 +48,53 @@
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "Internal Server error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicles/delete-mechanic": {
+            "post": {
+                "description": "Handles mechanic Delete request by validating input.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mechanics"
+                ],
+                "summary": "Delete mechanic",
+                "parameters": [
+                    {
+                        "description": "mechanic Delete Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteMechanicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "mechanic Deleted successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteMechanicResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
                         "schema": {
                             "$ref": "#/definitions/models.ErrorAPIResponse"
                         }
@@ -64,29 +104,47 @@
         }
     },
     "definitions": {
-        "models.BFFCreateVehicleRequest": {
+        "models.BFFAddMechanicRequest": {
             "type": "object",
             "properties": {
-                "customer_id": {
-                    "type": "integer",
-                    "example": 12
-                },
-                "model": {
+                "aadhar_number": {
                     "type": "string",
-                    "example": "Dezire"
+                    "example": "112233445566"
                 },
-                "number_plate": {
+                "name": {
                     "type": "string",
-                    "example": "MH19BW3626"
+                    "example": "Mukesh roy"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "9881463919"
                 }
             }
         },
-        "models.BFFCreateVehicleResponse": {
+        "models.BFFAddMechanicResponse": {
             "type": "object",
             "properties": {
                 "status": {
                     "type": "string",
-                    "example": "Successfully created"
+                    "example": "Successfully added"
+                }
+            }
+        },
+        "models.BFFDeleteMechanicRequest": {
+            "type": "object",
+            "properties": {
+                "aadhar_number": {
+                    "type": "string",
+                    "example": "112233445566"
+                }
+            }
+        },
+        "models.BFFDeleteMechanicResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "Successfully deleted"
                 }
             }
         },

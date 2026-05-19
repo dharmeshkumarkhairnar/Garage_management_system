@@ -69,8 +69,8 @@ const (
 // Database Constraint & Index Names
 const (
 	ErrUniqueConstraintViolation = "duplicate key value violates unique constraint"
-	IndexCustomerssPanCard       = "idx_customers_pan_card"
-	IndexCustomersEmail          = "idx_customers_email"
+	IndexCustomerssPanCard       = "idx_users_pan_card"
+	IndexCustomersEmail          = "idx_users_email"
 )
 
 // Duplicate Entry Errors

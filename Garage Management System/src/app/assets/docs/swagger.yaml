@@ -1,20 +1,32 @@
 definitions:
-  models.BFFCreateVehicleRequest:
+  models.BFFAddMechanicRequest:
     properties:
-      customer_id:
-        example: 12
-        type: integer
-      model:
-        example: Dezire
+      aadhar_number:
+        example: "112233445566"
         type: string
-      number_plate:
-        example: MH19BW3626
+      name:
+        example: Mukesh roy
+        type: string
+      phone:
+        example: "9881463919"
         type: string
     type: object
-  models.BFFCreateVehicleResponse:
+  models.BFFAddMechanicResponse:
     properties:
       status:
-        example: Successfully created
+        example: Successfully added
+        type: string
+    type: object
+  models.BFFDeleteMechanicRequest:
+    properties:
+      aadhar_number:
+        example: "112233445566"
+        type: string
+    type: object
+  models.BFFDeleteMechanicResponse:
+    properties:
+      status:
+        example: Successfully deleted
         type: string
     type: object
   models.ErrorAPIResponse:
@@ -34,32 +46,28 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/vehicles/create-vehicle:
+  /api/vehicles/add-mechanic:
     post:
       consumes:
       - application/json
-      description: Handles Vehicle registration by validating input and storing Vehicle
+      description: Handles mechanic add request by validating input and storing mechanics
         details
       parameters:
-      - description: Vehicle Registration Request
+      - description: mechanic add Request
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/models.BFFCreateVehicleRequest'
+          $ref: '#/definitions/models.BFFAddMechanicRequest'
       produces:
       - application/json
       responses:
         "201":
-          description: User created successfully
+          description: mechanic added successfully
           schema:
-            $ref: '#/definitions/models.BFFCreateVehicleResponse'
+            $ref: '#/definitions/models.BFFAddMechanicResponse'
         "400":
           description: Invalid input payload
-          schema:
-            $ref: '#/definitions/models.ErrorAPIResponse'
-        "404":
-          description: user not found
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
         "409":
@@ -67,10 +75,40 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
         "500":
-          description: Internal Server Error
+          description: Internal Server error
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
-      summary: Create a new Vehicle
+      summary: Adds new mechanic
       tags:
-      - Vehicles
+      - Mechanics
+  /api/vehicles/delete-mechanic:
+    post:
+      consumes:
+      - application/json
+      description: Handles mechanic Delete request by validating input.
+      parameters:
+      - description: mechanic Delete Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFDeleteMechanicRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: mechanic Deleted successfully
+          schema:
+            $ref: '#/definitions/models.BFFDeleteMechanicResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "500":
+          description: Internal Server error
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+      summary: Delete mechanic
+      tags:
+      - Mechanics
 swagger: "2.0"

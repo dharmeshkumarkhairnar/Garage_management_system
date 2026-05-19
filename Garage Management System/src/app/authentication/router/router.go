@@ -2,6 +2,7 @@ package router
 
 import (
 	"garage_management_system/src/app/authentication/business"
+	"garage_management_system/src/app/authentication/commons/constants"
 	"garage_management_system/src/app/authentication/handlers"
 	"garage_management_system/src/app/authentication/repository"
 
@@ -12,7 +13,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	// "github.com/swaggo/swag/example/basic/docs"
-	"garage_management_system/docs"
+	"garage_management_system/src/app/authentication/docs"
 
 	"gorm.io/gorm"
 )
@@ -31,10 +32,13 @@ func GetRouter(db *gorm.DB, logger *logrus.Logger) *gin.Engine {
 		AllowHeaders:    []string{"Authorization", "Content-type", "Origin"},
 	}))
 
-	createCustomerRepo := repository.NewCreateCustomer(db, logger)
+	createCustomerRepo := repository.NewCreateCustomerRepository(db, logger)
 	createCustomerSvc := business.NewCreateUserService(createCustomerRepo, db, logger)
-	createCustomerHandler := handlers.NewCreateCustomer(createCustomerSvc)
+	createCustomerHandler := handlers.NewCreateCustomerHandler(createCustomerSvc)
 
-	router.POST("/api/auth/register/customer", createCustomerHandler.HandleCreateCustomer)
+	AuthGroup := router.Group(constants.AuthRoutePrefix)
+	{
+		AuthGroup.POST(constants.RegisterCustomerRoute, createCustomerHandler.HandleCreateCustomer)
+	}
 	return router
 }

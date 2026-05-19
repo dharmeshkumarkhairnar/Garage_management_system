@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"garage_management_system/src/app/authentication/business"
 	"garage_management_system/src/app/authentication/commons/constants"
 	"garage_management_system/src/app/authentication/models"
@@ -13,13 +14,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CreateCustomer struct {
-	service *business.CreateCustomer
+type CreateCustomerHandler struct {
+	service *business.CreateCustomerService
 }
 
-func NewCreateCustomer(service *business.CreateCustomer) *CreateCustomer {
+func NewCreateCustomerHandler(service *business.CreateCustomerService) *CreateCustomerHandler {
 
-	return &CreateCustomer{
+	return &CreateCustomerHandler{
 		service: service,
 	}
 }
@@ -36,7 +37,7 @@ func NewCreateCustomer(service *business.CreateCustomer) *CreateCustomer {
 // @Failure 409 {object} models.ErrorAPIResponse "User already exists"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
 // @Router /api/auth/register/customer [post]
-func (controller *CreateCustomer) HandleCreateCustomer(ctx *gin.Context) {
+func (controller *CreateCustomerHandler) HandleCreateCustomer(ctx *gin.Context) {
 	var bffCreateCustomerRequest models.BFFCreateCustomerRequest
 
 	if err := ctx.ShouldBind(&bffCreateCustomerRequest); err != nil {
@@ -60,6 +61,7 @@ func (controller *CreateCustomer) HandleCreateCustomer(ctx *gin.Context) {
 
 	err := controller.service.CreateNewCustomer(ctx.Request.Context(), bffCreateCustomerRequest)
 	if err != nil {
+		fmt.Println("ERROR:", err)
 		if strings.Contains(err.Error(), constants.ErrDuplicateEntry) {
 			errorResponse := genericModels.ErrorAPIResponse{
 				Message: genericModels.ErrorMessage{
@@ -75,10 +77,11 @@ func (controller *CreateCustomer) HandleCreateCustomer(ctx *gin.Context) {
 		errorResponse := genericModels.ErrorAPIResponse{
 			Error: constants.ErrUserCreationFailed,
 		}
-
 		ctx.IndentedJSON(http.StatusInternalServerError, errorResponse)
 		return
 	}
 
-	ctx.IndentedJSON(http.StatusCreated, constants.UserCreationSuccessMsg)
+	ctx.IndentedJSON(http.StatusCreated, models.BFFCreateCustomerResponse{
+		Message: "customer created successfully",
+	})
 }

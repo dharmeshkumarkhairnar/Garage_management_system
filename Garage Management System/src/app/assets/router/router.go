@@ -1,16 +1,6 @@
 package router
 
 import (
-	"garage_management_system/src/app/visits/business"
-	"garage_management_system/src/app/visits/constants"
-	"garage_management_system/src/app/visits/handlers"
-	"garage_management_system/src/app/visits/repository"
-
-	svc "garage_management_system/src/app/assets/business"
-	assetsConstants "garage_management_system/src/app/assets/commons/constants"
-	handlr "garage_management_system/src/app/assets/handlers"
-	repo "garage_management_system/src/app/assets/repository"
-
 	"garage_management_system/src/utils/database"
 
 	"github.com/gin-contrib/cors"
@@ -18,7 +8,12 @@ import (
 	"github.com/sirupsen/logrus"
 	files "github.com/swaggo/files"
 
-	"garage_management_system/src/app/visits/docs"
+	"garage_management_system/src/app/assets/business"
+	"garage_management_system/src/app/assets/commons/constants"
+	"garage_management_system/src/app/assets/docs"
+	"garage_management_system/src/app/assets/handlers"
+	"garage_management_system/src/app/assets/middleware"
+	"garage_management_system/src/app/assets/repository"
 
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -41,27 +36,32 @@ func GetRouter() *gin.Engine {
 		AllowHeaders:    []string{"Authorization", "Content-type", "Origin"},
 	}))
 
-	createVehicleRepository := repository.NewCreateVehicleRepository(gdb)
-	createVehicleService := business.NewCreateVehicleService(createVehicleRepository)
-	createVehicleHandler := handlers.NewCreateVehicleHandler(createVehicleService)
+	addMechanicRepository := repository.NewAddMechanicRepository(gdb)
+	addMechanicService := business.NewAddMechanicService(addMechanicRepository)
+	addMechanicHandler := handlers.NewAddMechanicHandler(addMechanicService)
 
-	addNewServiceRepository := repo.NewAddNewServiceRepository(logger)
-	addNewServiceService := svc.NewAddNewServiceService(addNewServiceRepository, gdb)
-	addNewServiceHandler := handlr.NewAddNewServiceHandler(addNewServiceService)
+	deleteMechanicRepository := repository.NewDeleteMechanicRepository(gdb)
+	deleteMechanicService := business.NewDeleteMechanicService(deleteMechanicRepository)
+	deleteMechanicHandler := handlers.NewDeleteMechanicHandler(deleteMechanicService)
 
-	deleteServiceRepository := repo.NewDeleteServiceRepository(logger, gdb)
-	deleteServiceService := svc.NewDeleteServiceService(deleteServiceRepository, gdb)
-	deleteServiceHandler := handlr.NewDeleteServiceHandler(deleteServiceService)
+	addNewServiceRepository := repository.NewAddNewServiceRepository(logger)
+	addNewServiceService := business.NewAddNewServiceService(addNewServiceRepository, gdb)
+	addNewServiceHandler := handlers.NewAddNewServiceHandler(addNewServiceService)
 
-	Group := router.Group(constants.RoutePrefix)
+	deleteServiceRepository := repository.NewDeleteServiceRepository(logger, gdb)
+	deleteServiceService := business.NewDeleteServiceService(deleteServiceRepository, gdb)
+	deleteServiceHandler := handlers.NewDeleteServiceHandler(deleteServiceService)
+
+	Mechanics := router.Group(constants.MechanicRoutePrefix)
 	{
-		Group.POST(constants.CreateVehicle, createVehicleHandler.CreaterVehicle)
+		Mechanics.POST(constants.AddMechanic, middleware.AssetMiddleware(), addMechanicHandler.AddMechanic)
+		Mechanics.POST(constants.DeleteMechanic, middleware.AssetMiddleware(), deleteMechanicHandler.DeleteMechanic)
 	}
 
-	Services := router.Group(assetsConstants.ServiceRoutePrefix)
+	Services := router.Group(constants.ServiceRoutePrefix)
 	{
-		Services.POST(assetsConstants.AddService, addNewServiceHandler.HandleAddNewService)
-		Services.DELETE(assetsConstants.DeleteService, deleteServiceHandler.HandleDeleteService)
+		Services.POST(constants.AddService, addNewServiceHandler.HandleAddNewService)
+		Services.DELETE(constants.DeleteService, deleteServiceHandler.HandleDeleteService)
 	}
 
 	return router

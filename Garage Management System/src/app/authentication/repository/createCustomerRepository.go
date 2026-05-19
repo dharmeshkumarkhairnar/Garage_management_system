@@ -17,23 +17,23 @@ import (
 	"gorm.io/gorm"
 )
 
-type CreateCustomer interface {
+type CreateCustomerRepository interface {
 	CreateNewCustomer(ctx context.Context, db *gorm.DB, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error
 }
 
-type createCustomer struct {
+type createCustomerRepository struct {
 	// DB *gorm.DB
 	logger *logrus.Logger
 }
 
-func NewCreateCustomer(db *gorm.DB, logger *logrus.Logger) *createCustomer {
-	return &createCustomer{
+func NewCreateCustomerRepository(db *gorm.DB, logger *logrus.Logger) *createCustomerRepository {
+	return &createCustomerRepository{
 		// DB: db,
 		logger: logger,
 	}
 }
 
-func (repo *createCustomer) CreateNewCustomer(ctx context.Context, db *gorm.DB, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
+func (repo *createCustomerRepository) CreateNewCustomer(ctx context.Context, db *gorm.DB, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
 
 	start := time.Now()
 	hashPassword, err := utils.HashPassword(bffCreateCustomerRequest.Password)
@@ -44,7 +44,7 @@ func (repo *createCustomer) CreateNewCustomer(ctx context.Context, db *gorm.DB, 
 
 	bffCreateCustomerRequest.Password = hashPassword
 
-	NewCustomer := genericModels.Customers{
+	NewCustomer := genericModels.Users{
 		Name:      bffCreateCustomerRequest.Name,
 		Email:     bffCreateCustomerRequest.Email,
 		Phone:     bffCreateCustomerRequest.PhoneNumber,

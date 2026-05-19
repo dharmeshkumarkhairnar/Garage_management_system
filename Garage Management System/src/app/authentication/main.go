@@ -2,6 +2,7 @@ package main
 
 import (
 	"garage_management_system/src/app/authentication/router"
+	"garage_management_system/src/utils"
 	"garage_management_system/src/utils/database"
 	"log"
 
@@ -27,6 +28,10 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalf("Failed to initialize redis: %v", err)
 	// }
+
+	//Initialised for JWT token
+	utils.InitJWTConfig()
+
 	db := database.GetDB()
 
 	logger := logrus.New()

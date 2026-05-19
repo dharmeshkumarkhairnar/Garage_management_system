@@ -22,7 +22,7 @@ const (
 
 //header-token
 const (
-	InvalidTokenError            = "invalid token"
+	// InvalidTokenError            = "invalid token"
 	AuthHeaderMissingError       = "missing authorization header"
 	InvalidAuthFormatError       = "invalid authorization format"
 	TokenAlreadyBlacklistedError = "token is already blacklisted"
@@ -75,4 +75,23 @@ const (
 const (
 	ServiceDoesNotExist   = "service does not exist"
 	FailedToDeleteService = "failed to delete service"
+)
+
+const (
+	MechanicAdditionFailedError = "mechanic addition failed"
+	MechanicDeletionFailedError = "mechanic deletion failed"
+	UserNotFoundError           = "user not found"
+	DuplicateAadharNumberError  = "mechanic with this aadhar already exists"
+)
+
+// middleware errors
+const (
+	OperationFailed       = "operation failed"
+	InvalidTokenError     = "token is invalid"
+	MissingUserIDError    = "user id not found in token"
+	MissingUserRoleError  = "user role not found in token"
+	RedisOperationError   = "error in redis operation"
+	UserLoggedOutError    = "user is logged out"
+	HeaderIsMissingError  = "header is missing"
+	UnauthorizedUserError = "unauthorized user"
 )
