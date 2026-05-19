@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"garage_management_system/src/app/assets/constants"
+	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/models"
 	genModels "garage_management_system/src/models"
 

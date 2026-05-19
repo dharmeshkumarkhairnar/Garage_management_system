@@ -19,8 +19,10 @@ definitions:
         minLength: 8
         type: string
       phoneNumber:
-        example: "7568912340"
-        type: string
+        example: 8432805566
+        maximum: 9999999999
+        minimum: 1000000000
+        type: integer
     required:
     - confirmPassword
     - customerName

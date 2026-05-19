@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
-	"garage_management_system/src/app/assets/constants"
+	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/models"
 	genModels "garage_management_system/src/models"
 	"strings"
@@ -31,8 +31,8 @@ func (repo *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechan
 
 	NewMechanic := genModels.Mechanics{
 		Name:         bffAddMechaniceRequest.Name,
-		AadharNumber: bffAddMechaniceRequest.AddharNumber,
-		Phone:        bffAddMechaniceRequest.Phone,
+		AadharNumber: bffAddMechaniceRequest.AadharNumber,
+		Phone:        bffAddMechaniceRequest.PhoneNumber,
 		Created_at:   time.Now(),
 	}
 

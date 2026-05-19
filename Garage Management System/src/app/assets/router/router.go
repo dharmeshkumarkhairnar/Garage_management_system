@@ -8,7 +8,7 @@ import (
 	files "github.com/swaggo/files"
 
 	"garage_management_system/src/app/assets/business"
-	"garage_management_system/src/app/assets/constants"
+	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/docs"
 	"garage_management_system/src/app/assets/handlers"
 	"garage_management_system/src/app/assets/repository"

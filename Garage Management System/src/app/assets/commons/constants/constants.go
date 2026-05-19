@@ -2,8 +2,10 @@ package constants
 
 //Table related constants
 const (
-	MechanicsTableName = "mechanics"
-	AadharNumber       = "aadhar number"
+	MechanicsTableName        = "mechanics"
+	FieldMechanicAadharNumber = "AadharNumber"
+	FieldMechanicPhoneNumber  = "PhoneNumber"
+	FieldMechanicName         = "Name"
 )
 
 //Success

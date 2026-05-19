@@ -21,11 +21,7 @@ const (
 )
 
 const (
-	ErrPasswordMinLength    = "Password must be at least 8 characters long."
-	ErrPasswordLowercase    = "Password must contain at least one lower letter."
-	ErrPasswordUppercase    = "Password must contain at least one uppercase letter."
-	ErrPasswordDigit        = "Password must contain at least one digit."
-	ErrPasswordSpecialChar  = "Password must contain at least one special character (@$!%*?&)."
+	ErrPasswordFormat       = "Password must contain at least 8 characters long, at least one lower letter,at least one uppercase letter, at least one digit and at least one special character (@$!%*?&)."
 	ErrConfirmPasswordMatch = "ConfirmPassword must match Password."
 	ErrNewPasswordMatch     = "ConfirmPasword must match NewPassword"
 )

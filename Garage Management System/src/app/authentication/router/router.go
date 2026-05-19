@@ -12,7 +12,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	// "github.com/swaggo/swag/example/basic/docs"
-	"garage_management_system/docs"
+	"garage_management_system/src/app/authentication/docs"
 
 	"gorm.io/gorm"
 )

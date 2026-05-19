@@ -101,8 +101,10 @@ const docTemplate = `{
                     "example": "Admin@123"
                 },
                 "phoneNumber": {
-                    "type": "string",
-                    "example": "7568912340"
+                    "type": "integer",
+                    "maximum": 9999999999,
+                    "minimum": 1000000000,
+                    "example": 8432805566
                 }
             }
         },

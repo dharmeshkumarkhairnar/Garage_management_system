@@ -117,6 +117,11 @@ const docTemplate = `{
     "definitions": {
         "models.BFFAddMechanicRequest": {
             "type": "object",
+            "required": [
+                "aadhar_number",
+                "name",
+                "phoneNumber"
+            ],
             "properties": {
                 "aadhar_number": {
                     "type": "string",
@@ -124,11 +129,13 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string",
-                    "example": "Mukesh roy"
+                    "example": "Mukesh Roy"
                 },
-                "phone": {
-                    "type": "string",
-                    "example": "9881463919"
+                "phoneNumber": {
+                    "type": "integer",
+                    "maximum": 9999999999,
+                    "minimum": 1000000000,
+                    "example": 8432805566
                 }
             }
         },

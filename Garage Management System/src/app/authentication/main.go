@@ -23,10 +23,6 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	// err = redis.InitRedis()
-	// if err != nil {
-	// 	log.Fatalf("Failed to initialize redis: %v", err)
-	// }
 	db := database.GetDB()
 
 	logger := logrus.New()

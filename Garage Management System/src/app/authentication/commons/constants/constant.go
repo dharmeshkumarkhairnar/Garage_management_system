@@ -4,7 +4,6 @@ package constants
 const (
 	DSNString = "host=%s port=%s dbname=%s user=%s password=%s TimeZone=%s"
 	AccessKey = "Apr/meTe4sxpBwxb36ISTRNnHc4y+Y34KjQ/ntwB1Kw="
-	// PasswordRegex = "^(?=.[a-z])(?=.[A-Z])(?=.\\d)(?=.[\\W_]).+$"
 )
 
 //Authentications API URL Keys
@@ -13,20 +12,20 @@ const (
 	PortDefaultValude = 8081
 )
 
-// Database table name & field names for users
+// Database table name & field names for Customers
 const (
-	UsersTableName = "users"
-	Fieldemail     = "email"
-	Username       = "username = ?"
+	CustomersTableName = "customers"
+	CustomerEmail      = "email"
+	CustomerName       = "name = ?"
 )
 
 // Success message for user
 const (
-	UserCreationSuccessMsg    = "User created successfully"
-	UserLoggedInSuccessMsg    = "User logged in successfully"
-	OtpValidatedSuccessMsg    = "OTP validated successfully"
-	PasswordChangedSuccessMsg = "Password changed succefully"
-	LogoutSuccessfulMsg       = "User logged out successfully"
+	UserCreationSuccessMsg     = "Customer created successfully"
+	CustomerLoggedInSuccessMsg = "Customer logged in successfully"
+	OtpValidatedSuccessMsg     = "OTP validated successfully"
+	PasswordChangedSuccessMsg  = "Password changed succefully"
+	LogoutSuccessfulMsg        = "Customer logged out successfully"
 )
 
 //Swagger Titile
@@ -49,7 +48,6 @@ const (
 )
 
 const (
-	PANCardRegex     = `^[A-Z]{5}[0-9]{4}[A-Z]{1}$`
 	PasswordRegex    = `^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$`
 	EmailRegex       = `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$`
 	UppercaseRegex   = `[A-Z]`
@@ -59,15 +57,14 @@ const (
 	OtpRegexp        = "^[0-9]{4}$"
 )
 
+//customer
 const (
-	FieldPassword        = "Password"
-	FieldConfirmPassword = "ConfirmPassword"
-	FieldPanCard         = "PanCard"
-	FieldStrongPassword  = "strongPassword"
-	FieldPhoneNumber     = "PhoneNumber"
-	FieldEmail           = "Email"
-	FieldUsername        = "Username"
-	FieldOtp             = "Otp"
+	FieldPassword            = "Password"
+	FieldConfirmPassword     = "ConfirmPassword"
+	FieldStrongPassword      = "strongPassword"
+	FieldCustomerPhoneNumber = "PhoneNumber"
+	FieldCustomerEmail       = "Email"
+	FieldCustomerName        = "Name"
 )
 
 // Migration success Message
@@ -80,10 +77,6 @@ const (
 	JWT      = "jwt"
 	Yaml     = "yaml"
 )
-
-// const (
-// 	DSNString = "host=%s port=%s user=%s password=%s dbname=%s sslmode=%s TimeZone=%s"
-// )
 
 // Database Keys
 const (
