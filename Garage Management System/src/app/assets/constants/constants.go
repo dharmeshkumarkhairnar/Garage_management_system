@@ -33,3 +33,18 @@ const (
 	MechanicAddedInDB   = "mechanic added to DB"
 	MechanicDeletedInDB = "mechanic deleted to DB"
 )
+
+//middlware constants
+const (
+	User          = "user"
+	Admin         = "admin"
+	Header        = "header"
+	Token         = "token"
+	Subject       = "sub"
+	UserRole      = "role"
+	UserId        = "user_id"
+	Authorization = "Authorization"
+	Bearer        = "Bearer "
+	ActiveToken   = "ACTIVE_TOKEN_%s"
+	Redis         = "redis"
+)

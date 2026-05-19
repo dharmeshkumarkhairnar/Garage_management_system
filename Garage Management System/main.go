@@ -2,6 +2,7 @@ package main
 
 import (
 	model "garage_management_system/src/models"
+	"garage_management_system/src/utils"
 	"garage_management_system/src/utils/database"
 	"log"
 )
@@ -19,6 +20,8 @@ func main() {
 	}
 
 	log.Print("Database migrated successfully")
+
+	utils.InitJWTConfig()
 
 	// err = redis.InitRedis()
 	// if err != nil {

@@ -11,6 +11,7 @@ import (
 	"garage_management_system/src/app/assets/constants"
 	"garage_management_system/src/app/assets/docs"
 	"garage_management_system/src/app/assets/handlers"
+	"garage_management_system/src/app/assets/middleware"
 	"garage_management_system/src/app/assets/repository"
 
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -40,8 +41,8 @@ func GetRouter() *gin.Engine {
 
 	Group := router.Group(constants.RoutePrefix)
 	{
-		Group.POST(constants.AddMechanic, addMechanicHandler.AddMechanic)
-		Group.POST(constants.DeleteMechanic, deleteMechanicHandler.DeleteMechanic)
+		Group.POST(constants.AddMechanic, middleware.AssetMiddleware(), addMechanicHandler.AddMechanic)
+		Group.POST(constants.DeleteMechanic, middleware.AssetMiddleware(), deleteMechanicHandler.DeleteMechanic)
 	}
 
 	return router
