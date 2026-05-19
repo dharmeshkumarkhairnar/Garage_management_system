@@ -60,8 +60,8 @@ func GetRouter() *gin.Engine {
 
 	Services := router.Group(constants.ServiceRoutePrefix)
 	{
-		Services.POST(constants.AddService, addNewServiceHandler.HandleAddNewService)
-		Services.DELETE(constants.DeleteService, deleteServiceHandler.HandleDeleteService)
+		Services.POST(constants.AddService, middleware.AssetMiddleware(), addNewServiceHandler.HandleAddNewService)
+		Services.DELETE(constants.DeleteService, middleware.AssetMiddleware(), deleteServiceHandler.HandleDeleteService)
 	}
 
 	return router
