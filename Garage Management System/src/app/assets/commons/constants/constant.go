@@ -98,8 +98,10 @@ const (
 
 //Table related constants
 const (
-	MechanicsTableName = "mechanics"
-	AadharNumber       = "aadhar number"
+	MechanicsTableName        = "mechanics"
+	FieldMechanicAadharNumber = "AadharNumber"
+	FieldMechanicPhoneNumber  = "PhoneNumber"
+	FieldMechanicName         = "Name"
 )
 
 //Success
@@ -117,12 +119,6 @@ const (
 const (
 	DuplicateAadharNumberDBError = "duplicate key value violates unique constraint \"idx_mechanics_aadhar_number\""
 )
-
-// Request Validation Errors
-// const (
-// 	ErrInvalidPayload  = "invalid required payload"
-// 	ErrUnexpectedValue = "unexpected value for the field."
-// )
 
 //logger messages
 const (
