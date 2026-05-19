@@ -11,16 +11,15 @@ type CreateVehicleService struct {
 	createVehicleRepository repository.CreateVehicleRepository
 }
 
-
 func NewCreateVehicleService(createVehicleRepository repository.CreateVehicleRepository) *CreateVehicleService {
 	return &CreateVehicleService{
-		createVehicleRepository: createVehicleRepository, 
+		createVehicleRepository: createVehicleRepository,
 	}
 }
 
-func (service *CreateVehicleService) CreateVehicle(ctx context.Context, spanCtx context.Context, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error {
+func (service *CreateVehicleService) CreateVehicle(ctx context.Context, userID uint64, spanCtx context.Context, bffCreateVehicleRequest models.BFFCreateVehicleRequest) error {
 
-	err := service.createVehicleRepository.CreateVehicle(spanCtx, bffCreateVehicleRequest)
+	err := service.createVehicleRepository.CreateVehicle(spanCtx, userID, bffCreateVehicleRequest)
 	if err != nil {
 		return fmt.Errorf("%w", err)
 	}

@@ -16,7 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AssetMiddleware() gin.HandlerFunc {
+func VisitMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		start := time.Now()
 		defer func() {

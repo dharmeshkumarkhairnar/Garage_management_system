@@ -1,6 +1,7 @@
 package router
 
 import (
+	"garage_management_system/src/app/visits/middleware"
 	"garage_management_system/src/app/visits/business"
 	"garage_management_system/src/app/visits/constants"
 	"garage_management_system/src/app/visits/handlers"
@@ -37,7 +38,7 @@ func GetRouter() *gin.Engine {
 
 	Group := router.Group(constants.RoutePrefix)
 	{
-		Group.POST(constants.CreateVehicle, createVehicleHandler.CreaterVehicle)
+		Group.POST(constants.CreateVehicle,middleware.VisitMiddleware(), createVehicleHandler.CreaterVehicle)
 	}
 
 	return router
