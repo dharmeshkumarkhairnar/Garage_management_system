@@ -68,6 +68,11 @@ const (
 
 // Duplicate Entry Errors
 const (
-	ErrDuplicateEntry = "already exists"
-	ErrServiceAlreadyExists  = "service already exists"
+	ErrDuplicateEntry       = "already exists"
+	ErrServiceAlreadyExists = "service already exists"
+)
+
+const (
+	ServiceDoesNotExist   = "service does not exist"
+	FailedToDeleteService = "failed to delete service"
 )

@@ -1,36 +1,34 @@
 package business
 
 import (
-	"context"
 	"fmt"
 	"garage_management_system/src/app/assets/commons/constants"
-	"garage_management_system/src/app/assets/models"
 	"garage_management_system/src/app/assets/repository"
 
+	"golang.org/x/net/context"
 	"gorm.io/gorm"
 )
 
-type AddNewServiceService struct {
-	repo repository.AddNewServiceRepository
+type DeleteServiceService struct {
+	repo repository.DeleteServiceRepository
 	db   *gorm.DB
 }
 
-func NewAddNewServiceService(repo repository.AddNewServiceRepository, db *gorm.DB) *AddNewServiceService {
-	return &AddNewServiceService{
+func NewDeleteServiceService(repo repository.DeleteServiceRepository, db *gorm.DB) *DeleteServiceService {
+	return &DeleteServiceService{
 		repo: repo,
 		db:   db,
 	}
 }
 
-func (service *AddNewServiceService) AddNewService(ctx context.Context, bffAddNewServiceRequest models.BFFAddNewServiceRequest) error {
-	// start := time.Now()
+func (service *DeleteServiceService) DeleteService(ctx context.Context, serviceName string) error {
 
 	tx := service.db.Begin()
 	if tx.Error != nil {
 		return fmt.Errorf(constants.ErrBeginTx, tx.Error)
 	}
 
-	err := service.repo.AddNewService(ctx, tx, bffAddNewServiceRequest)
+	err := service.repo.DeleteService(ctx, serviceName)
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("%w", err)

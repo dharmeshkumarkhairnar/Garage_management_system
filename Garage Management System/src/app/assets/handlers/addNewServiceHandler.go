@@ -13,10 +13,10 @@ import (
 )
 
 type AddNewServiceHandler struct {
-	service business.AddNewServiceService
+	service *business.AddNewServiceService
 }
 
-func NewAddNewServiceHandler(service business.AddNewServiceService) *AddNewServiceHandler {
+func NewAddNewServiceHandler(service *business.AddNewServiceService) *AddNewServiceHandler {
 	return &AddNewServiceHandler{
 		service: service,
 	}
@@ -25,7 +25,7 @@ func NewAddNewServiceHandler(service business.AddNewServiceService) *AddNewServi
 func (controller AddNewServiceHandler) HandleAddNewService(ctx *gin.Context) {
 	var bffAddNewServiceRequest models.BFFAddNewServiceRequest
 
-	if err := ctx.ShouldBind(bffAddNewServiceRequest); err != nil {
+	if err := ctx.ShouldBind(&bffAddNewServiceRequest); err != nil {
 		errMsgs := genericModels.ErrorMessage{
 			Key:          err.(*json.UnmarshalTypeError).Field,
 			ErrorMessage: constants.ErrUnexpectedValue,
@@ -35,6 +35,7 @@ func (controller AddNewServiceHandler) HandleAddNewService(ctx *gin.Context) {
 			Message: errMsgs,
 			Error:   constants.ErrInvalidPayload,
 		})
+		return
 	}
 
 	err := controller.service.AddNewService(ctx, bffAddNewServiceRequest)
@@ -55,7 +56,8 @@ func (controller AddNewServiceHandler) HandleAddNewService(ctx *gin.Context) {
 			Key: "service", ErrorMessage: "failed to add new service",
 		}
 		ctx.IndentedJSON(http.StatusInternalServerError, errorResponse)
+		return
 	}
 
-	ctx.IndentedJSON(http.StatusCreated, constants.ServiceAddedSuccessfully)
+	ctx.IndentedJSON(http.StatusCreated, models.BFFAddNewServiceResponse{Message: "added new service successfully"})
 }

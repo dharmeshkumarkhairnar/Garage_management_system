@@ -31,7 +31,7 @@ func NewAddNewServiceRepository(logger *logrus.Logger) *addNewServiceRepository 
 func (repo *addNewServiceRepository) AddNewService(ctx context.Context, db *gorm.DB, bffAddNewServiceRequest models.BFFAddNewServiceRequest) error {
 	start := time.Now()
 	newService := genericModels.ServiceMaster{
-		Service: bffAddNewServiceRequest.Service,
+		Service: strings.ToLower(bffAddNewServiceRequest.Service),
 		Amount:  bffAddNewServiceRequest.Amount,
 	}
 

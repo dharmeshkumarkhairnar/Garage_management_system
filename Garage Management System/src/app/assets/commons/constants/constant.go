@@ -72,7 +72,7 @@ const (
 	Authorization = "Authorization"
 	Bearer        = "Bearer"
 	Token         = "token"
-	Server        = "server"
+	// Server        = "server"
 )
 
 // redis
@@ -88,4 +88,9 @@ const (
 	Sub        = "sub"
 	JTI        = "jti"
 	DeviceType = "device_type"
+)
+
+const (
+	Server  = "server"
+	Service = "service"
 )

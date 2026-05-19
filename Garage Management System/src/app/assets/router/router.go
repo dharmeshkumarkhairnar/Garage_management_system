@@ -7,6 +7,7 @@ import (
 	"garage_management_system/src/app/visits/repository"
 
 	svc "garage_management_system/src/app/assets/business"
+	assetsConstants "garage_management_system/src/app/assets/commons/constants"
 	handlr "garage_management_system/src/app/assets/handlers"
 	repo "garage_management_system/src/app/assets/repository"
 
@@ -24,6 +25,7 @@ import (
 
 func GetRouter() *gin.Engine {
 	router := gin.New()
+	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	gdb := database.GetDB().DB
 
@@ -45,16 +47,21 @@ func GetRouter() *gin.Engine {
 
 	addNewServiceRepository := repo.NewAddNewServiceRepository(logger)
 	addNewServiceService := svc.NewAddNewServiceService(addNewServiceRepository, gdb)
-	addNewServiceHandler := handlr.NewAddNewServiceHandler(*addNewServiceService)
+	addNewServiceHandler := handlr.NewAddNewServiceHandler(addNewServiceService)
+
+	deleteServiceRepository := repo.NewDeleteServiceRepository(logger, gdb)
+	deleteServiceService := svc.NewDeleteServiceService(deleteServiceRepository, gdb)
+	deleteServiceHandler := handlr.NewDeleteServiceHandler(deleteServiceService)
 
 	Group := router.Group(constants.RoutePrefix)
 	{
 		Group.POST(constants.CreateVehicle, createVehicleHandler.CreaterVehicle)
 	}
 
-	Services := router.Group("/api/services")
+	Services := router.Group(assetsConstants.ServiceRoutePrefix)
 	{
-		Services.POST("/add-service", addNewServiceHandler.HandleAddNewService)
+		Services.POST(assetsConstants.AddService, addNewServiceHandler.HandleAddNewService)
+		Services.DELETE(assetsConstants.DeleteService, deleteServiceHandler.HandleDeleteService)
 	}
 
 	return router
