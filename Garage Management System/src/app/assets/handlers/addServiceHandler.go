@@ -6,6 +6,7 @@ import (
 	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/models"
 	genericModels "garage_management_system/src/models"
+	"garage_management_system/src/utils/validations"
 	"net/http"
 	"strings"
 
@@ -35,6 +36,12 @@ func (controller AddNewServiceHandler) HandleAddNewService(ctx *gin.Context) {
 			Message: errMsgs,
 			Error:   constants.ErrInvalidPayload,
 		})
+		return
+	}
+
+	if err := validations.GetBFFValidator().Struct(&bffAddNewServiceRequest); err != nil {
+		validationErros, _ := validations.FormatValidationErrors(err)
+		ctx.IndentedJSON(http.StatusBadRequest, validationErros)
 		return
 	}
 
