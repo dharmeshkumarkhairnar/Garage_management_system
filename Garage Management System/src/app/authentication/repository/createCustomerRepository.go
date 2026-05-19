@@ -60,7 +60,7 @@ func (repo *createCustomerRepository) CreateNewCustomer(ctx context.Context, db 
 			duplicateKeys := []string{}
 
 			if strings.Contains(errorMsgs, constants.IndexCustomersEmail) {
-				duplicateKeys = append(duplicateKeys, constants.FieldEmail)
+				duplicateKeys = append(duplicateKeys, constants.FieldCustomerEmail)
 			}
 
 			if len(duplicateKeys) > 0 {

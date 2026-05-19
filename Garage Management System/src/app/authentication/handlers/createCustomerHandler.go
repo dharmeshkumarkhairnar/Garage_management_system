@@ -7,6 +7,7 @@ import (
 	"garage_management_system/src/app/authentication/commons/constants"
 	"garage_management_system/src/app/authentication/models"
 	genericModels "garage_management_system/src/models"
+	"garage_management_system/src/utils/validations"
 
 	"net/http"
 	"strings"
@@ -53,11 +54,11 @@ func (controller *CreateCustomerHandler) HandleCreateCustomer(ctx *gin.Context) 
 		return
 	}
 
-	// if err := validations.GetBFFValidator().Struct(&bffCreateUserRequest); err != nil {
-	// 	validationErros, _ := validations.FormatValidationErrors(err)
-	// 	ctx.IndentedJSON(http.StatusBadRequest, validationErros)
-	// 	return
-	// }
+	if err := validations.GetBFFValidator().Struct(&bffCreateCustomerRequest); err != nil {
+		validationErros, _ := validations.FormatValidationErrors(err)
+		ctx.IndentedJSON(http.StatusBadRequest, validationErros)
+		return
+	}
 
 	err := controller.service.CreateNewCustomer(ctx.Request.Context(), bffCreateCustomerRequest)
 	if err != nil {

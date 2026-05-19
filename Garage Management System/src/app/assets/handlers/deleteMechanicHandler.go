@@ -6,6 +6,7 @@ import (
 	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/models"
 	genModels "garage_management_system/src/models"
+	"garage_management_system/src/utils/validations"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -45,11 +46,11 @@ func (controller *DeleteMechanicHandler) DeleteMechanic(ctx *gin.Context) {
 		return
 	}
 
-	// if err := validations.GetBFFValidator().Struct(&bffCreateUserRequest); err != nil {
-	// 	validationErros, _ := validations.FormatValidationErrors(err)
-	// 	ctx.IndentedJSON(http.StatusBadRequest, validationErros)
-	// 	return
-	// }
+	if err := validations.GetBFFValidator().Struct(&bffDeleteMechanicRequest); err != nil {
+		validationErros, _ := validations.FormatValidationErrors(err)
+		ctx.IndentedJSON(http.StatusBadRequest, validationErros)
+		return
+	}
 
 	err := controller.service.DeleteMechanic(ctx, ctx.Request.Context(), bffDeleteMechanicRequest)
 	if err != nil {

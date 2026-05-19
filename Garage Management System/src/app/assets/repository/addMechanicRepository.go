@@ -31,8 +31,8 @@ func (repo *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechan
 
 	NewMechanic := genModels.Mechanics{
 		Name:         bffAddMechaniceRequest.Name,
-		AadharNumber: bffAddMechaniceRequest.AddharNumber,
-		Phone:        bffAddMechaniceRequest.Phone,
+		AadharNumber: bffAddMechaniceRequest.AadharNumber,
+		Phone:        bffAddMechaniceRequest.PhoneNumber,
 		Created_at:   time.Now(),
 	}
 

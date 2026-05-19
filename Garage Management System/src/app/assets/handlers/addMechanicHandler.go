@@ -6,6 +6,7 @@ import (
 	"garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/assets/models"
 	genModels "garage_management_system/src/models"
+	"garage_management_system/src/utils/validations"
 	"net/http"
 	"strings"
 
@@ -47,16 +48,16 @@ func (controller *AddMechanicHandler) AddMechanic(ctx *gin.Context) {
 		return
 	}
 
-	// if err := validations.GetBFFValidator().Struct(&bffCreateUserRequest); err != nil {
-	// 	validationErros, _ := validations.FormatValidationErrors(err)
-	// 	ctx.IndentedJSON(http.StatusBadRequest, validationErros)
-	// 	return
-	// }
+	if err := validations.GetBFFValidator().Struct(&bffAddMechanicRequest); err != nil {
+		validationErros, _ := validations.FormatValidationErrors(err)
+		ctx.IndentedJSON(http.StatusBadRequest, validationErros)
+		return
+	}
 
 	err := controller.service.AddMechanic(ctx, ctx.Request.Context(), bffAddMechanicRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), constants.DuplicateAadharNumberError) {
-			errorMsg := genModels.ErrorMessage{Key: constants.AadharNumber, ErrorMessage: constants.DuplicateAadharNumberError}
+			errorMsg := genModels.ErrorMessage{Key: constants.FieldMechanicAadharNumber, ErrorMessage: constants.DuplicateAadharNumberError}
 			errorResponse := genModels.ErrorAPIResponse{
 				Message: errorMsg,
 				Error:   constants.MechanicAdditionFailedError,

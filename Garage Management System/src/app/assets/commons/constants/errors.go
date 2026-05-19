@@ -94,4 +94,5 @@ const (
 	UserLoggedOutError    = "user is logged out"
 	HeaderIsMissingError  = "header is missing"
 	UnauthorizedUserError = "unauthorized user"
+	AadharFormatError           = "Aadhar must be 12 digits long and must contain digits only"
 )

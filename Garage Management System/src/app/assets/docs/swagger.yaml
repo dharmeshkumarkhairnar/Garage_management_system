@@ -5,11 +5,17 @@ definitions:
         example: "112233445566"
         type: string
       name:
-        example: Mukesh roy
+        example: Mukesh Roy
         type: string
-      phone:
-        example: "9881463919"
-        type: string
+      phoneNumber:
+        example: 8432805566
+        maximum: 9999999999
+        minimum: 1000000000
+        type: integer
+    required:
+    - aadhar_number
+    - name
+    - phoneNumber
     type: object
   models.BFFAddMechanicResponse:
     properties:

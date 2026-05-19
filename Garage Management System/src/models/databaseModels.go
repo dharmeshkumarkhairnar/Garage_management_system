@@ -30,7 +30,7 @@ type Mechanics struct {
 	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	Name         string    `gorm:"column:name" json:"name"`
 	AadharNumber string    `gorm:"column:aadhar_number;uniqueIndex" json:"aadhar_number"`
-	Phone        uint64    `gorm:"column:phone" json:"phone"`
+	Phone        uint64    `gorm:"column:phoneNumber" json:"phoneNumber"`
 	Created_at   time.Time `gorm:"column:created_at" json:"created_at"`
 }
 
