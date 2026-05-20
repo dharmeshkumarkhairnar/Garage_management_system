@@ -14,7 +14,7 @@ import (
 )
 
 type AddMechanicRepository interface {
-	AddMechanic(ctx context.Context, bffAddMechaniceRequest models.BFFAddMechanicRequest) error
+	AddMechanic(ctx context.Context, mechanic_id string, bffAddMechaniceRequest models.BFFAddMechanicRequest) error
 }
 
 type addMechanicRepository struct {
@@ -25,11 +25,12 @@ func NewAddMechanicRepository(gDB *gorm.DB) *addMechanicRepository {
 	return &addMechanicRepository{gDB: gDB}
 }
 
-func (repo *addMechanicRepository) AddMechanic(ctx context.Context, bffAddMechaniceRequest models.BFFAddMechanicRequest) error {
+func (repo *addMechanicRepository) AddMechanic(ctx context.Context, mechanic_id string, bffAddMechaniceRequest models.BFFAddMechanicRequest) error {
 
 	logger := logrus.New()
 
 	NewMechanic := genModels.Mechanics{
+		MechID: mechanic_id,
 		Name:         bffAddMechaniceRequest.Name,
 		AadharNumber: bffAddMechaniceRequest.AadharNumber,
 		Phone:        bffAddMechaniceRequest.PhoneNumber,

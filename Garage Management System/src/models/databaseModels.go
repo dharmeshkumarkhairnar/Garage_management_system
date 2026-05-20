@@ -27,7 +27,7 @@ type Vehicles struct {
 }
 
 type Mechanics struct {
-	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
+	MechID       string    `gorm:"column:mechID;primarykey" json:"id"`
 	Name         string    `gorm:"column:name" json:"name"`
 	AadharNumber string    `gorm:"column:aadhar_number;uniqueIndex" json:"aadhar_number"`
 	Phone        uint64    `gorm:"column:phoneNumber" json:"phoneNumber"`
@@ -43,12 +43,12 @@ type ServiceMaster struct {
 type VisitRecords struct {
 	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
-	MechanicID   uint64    `gorm:"column:mechanic_id" json:"mechanic_id"`
+	MechanicID   string    `gorm:"column:mechID" json:"mechID"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
 	DeliveryDate time.Time `gorm:"column:delivery_date;type:date" json:"delivery_date"`
 
 	Vehicle_ID  Vehicles  `gorm:"foreignkey:VehicleID;references:ID"`
-	Mechanic_ID Mechanics `gorm:"foreignkey:MechanicID;references:ID"`
+	Mechanic_ID Mechanics `gorm:"foreignkey:MechanicID;references:MechID"`
 }
 
 type VisitServices struct {

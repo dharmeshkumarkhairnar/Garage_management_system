@@ -54,7 +54,7 @@ func (controller *AddMechanicHandler) AddMechanic(ctx *gin.Context) {
 		return
 	}
 
-	err := controller.service.AddMechanic(ctx, ctx.Request.Context(), bffAddMechanicRequest)
+	mechanic_id, err := controller.service.AddMechanic(ctx, ctx.Request.Context(), bffAddMechanicRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), constants.DuplicateAadharNumberError) {
 			errorMsg := genModels.ErrorMessage{Key: constants.FieldMechanicAadharNumber, ErrorMessage: constants.DuplicateAadharNumberError}
@@ -75,6 +75,7 @@ func (controller *AddMechanicHandler) AddMechanic(ctx *gin.Context) {
 
 	ctx.IndentedJSON(http.StatusCreated, models.BFFAddMechanicResponse{
 		Status: constants.MechanicAddedSuccessfully,
+		MechanicID: mechanic_id,
 	})
 
 }
