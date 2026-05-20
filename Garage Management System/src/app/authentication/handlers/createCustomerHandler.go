@@ -29,7 +29,7 @@ func NewCreateCustomerHandler(service *business.CreateCustomerService) *CreateCu
 // HandlerCreaterCustomer handles the customer creation request.
 // @Summary Create a new customer
 // @Description Handles customer registration by validating input and storing user details
-// @Tags Customer
+// @Tags User
 // @Accept json
 // @Produce json
 // @Param request body models.BFFCreateCustomerRequest true "Customer Registration Request"
@@ -37,19 +37,19 @@ func NewCreateCustomerHandler(service *business.CreateCustomerService) *CreateCu
 // @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
 // @Failure 409 {object} models.ErrorAPIResponse "User already exists"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
-// @Router /api/auth/register/customer [post]
+// @Router /api/auth/register [post]
 func (controller *CreateCustomerHandler) HandleCreateCustomer(ctx *gin.Context) {
 	var bffCreateCustomerRequest models.BFFCreateCustomerRequest
 
 	if err := ctx.ShouldBind(&bffCreateCustomerRequest); err != nil {
 		errorMsgs := genericModels.ErrorMessage{
 			Key:          err.(*json.UnmarshalTypeError).Field,
-			ErrorMessage: constants.ErrUnexpectedValue,
+			ErrorMessage: constants.UnexpectedValueError,
 		}
 
 		ctx.IndentedJSON(http.StatusBadRequest, genericModels.ErrorAPIResponse{
 			Message: errorMsgs,
-			Error:   constants.ErrInvalidPayload,
+			Error:   constants.InvalidPayloadError,
 		})
 		return
 	}

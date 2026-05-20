@@ -18,22 +18,22 @@ import (
 )
 
 type CreateCustomerRepository interface {
-	CreateNewCustomer(ctx context.Context, db *gorm.DB, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error
+	CreateNewCustomer(ctx context.Context, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error
 }
 
 type createCustomerRepository struct {
-	// DB *gorm.DB
+	DB     *gorm.DB
 	logger *logrus.Logger
 }
 
 func NewCreateCustomerRepository(db *gorm.DB, logger *logrus.Logger) *createCustomerRepository {
 	return &createCustomerRepository{
-		// DB: db,
+		DB:     db,
 		logger: logger,
 	}
 }
 
-func (repo *createCustomerRepository) CreateNewCustomer(ctx context.Context, db *gorm.DB, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
+func (repo *createCustomerRepository) CreateNewCustomer(ctx context.Context, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
 
 	start := time.Now()
 	hashPassword, err := utils.HashPassword(bffCreateCustomerRequest.Password)
@@ -52,7 +52,7 @@ func (repo *createCustomerRepository) CreateNewCustomer(ctx context.Context, db 
 		CreatedAt: time.Now(),
 	}
 
-	result := db.WithContext(ctx).Create(&NewCustomer)
+	result := repo.DB.WithContext(ctx).Create(&NewCustomer)
 	if result.Error != nil {
 		errorMsgs := result.Error.Error()
 

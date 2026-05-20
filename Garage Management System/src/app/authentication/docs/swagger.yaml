@@ -20,6 +20,7 @@ definitions:
         type: string
       phoneNumber:
         example: 8432805566
+        example: 7568912340
         maximum: 9999999999
         minimum: 1000000000
         type: integer
@@ -29,6 +30,29 @@ definitions:
     - email
     - password
     - phoneNumber
+    type: object
+  models.BFFLoginUserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        example: Admin@123
+        type: string
+      role:
+        example: customer or admin
+        type: string
+    required:
+    - email
+    - password
+    - role
+    type: object
+  models.BFFLoginUserResponse:
+    properties:
+      message:
+        example: user loggedin successfully
+        type: string
+      token:
+        type: string
     type: object
   models.ErrorAPIResponse:
     properties:
@@ -50,7 +74,45 @@ info:
   title: Authentication Service API
   version: "1.0"
 paths:
-  /api/auth/register/customer:
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates user and returns JWT token
+      parameters:
+      - description: User Sign In Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFLoginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/models.BFFLoginUserResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.BFFLoginUserResponse'
+        "401":
+          description: Invalid credentials
+          schema:
+            $ref: '#/definitions/models.BFFLoginUserResponse'
+        "404":
+          description: User does not exist
+          schema:
+            $ref: '#/definitions/models.BFFLoginUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BFFLoginUserResponse'
+      summary: Login registered user or admin
+      tags:
+      - User
+  /api/auth/register:
     post:
       consumes:
       - application/json
@@ -84,7 +146,7 @@ paths:
             $ref: '#/definitions/models.ErrorAPIResponse'
       summary: Create a new customer
       tags:
-      - Customer
+      - User
 securityDefinitions:
   BearerAuth:
     in: header

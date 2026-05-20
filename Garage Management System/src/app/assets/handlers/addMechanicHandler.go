@@ -34,7 +34,7 @@ func NewAddMechanicHandler(service *business.AddMechanicService) *AddMechanicHan
 // @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
 // @Failure 409 {object} models.ErrorAPIResponse "Duplicate value in request"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server error"
-// @Router /api/vehicles/add-mechanic [post]
+// @Router /api/mechanics/add [post]
 func (controller *AddMechanicHandler) AddMechanic(ctx *gin.Context) {
 
 	var bffAddMechanicRequest models.BFFAddMechanicRequest

@@ -2,5 +2,6 @@ package constants
 
 const (
 	AuthRoutePrefix       = "/api/auth"
-	RegisterCustomerRoute = "/register/customer"
+	RegisterRoute = "/register"
+	LoginUserRoute        = "/login"
 )
