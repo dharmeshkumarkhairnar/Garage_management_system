@@ -8,5 +8,5 @@ type BFFLoginUserRequest struct {
 
 type BFFLoginUserResponse struct {
 	Token   string `json:"token"`
-	Message string `json:"message" example:"user loggedin successfully"`
+	Message string `json:"message" example:"user logged in successfully"`
 }

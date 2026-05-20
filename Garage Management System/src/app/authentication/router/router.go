@@ -4,6 +4,7 @@ import (
 	"garage_management_system/src/app/authentication/business"
 	"garage_management_system/src/app/authentication/commons/constants"
 	"garage_management_system/src/app/authentication/handlers"
+	"garage_management_system/src/app/authentication/middleware"
 	"garage_management_system/src/app/authentication/repository"
 
 	"github.com/gin-contrib/cors"
@@ -41,10 +42,13 @@ func GetRouter(db *gorm.DB, logger *logrus.Logger, redisClient *redis.Client) *g
 	loginUserService := business.NewLoginUserService(db, redisClient, loginUserRepository)
 	loginUserHandler := handlers.NewLoginUserHandler(loginUserService)
 
+	logoutUserService := business.NewLogoutUserService(redisClient)
+	logoutUserHandler := handlers.NewLogoutUserHandler(logoutUserService)
 	AuthGroup := router.Group(constants.AuthRoutePrefix)
 	{
 		AuthGroup.POST(constants.RegisterRoute, createCustomerHandler.HandleCreateCustomer)
 		AuthGroup.POST(constants.LoginUserRoute, loginUserHandler.HandleLoginUSer)
+		AuthGroup.POST(constants.LogoutUserRoute,middleware.AuthMiddleware(), logoutUserHandler.HandleLogoutUSer)
 	}
 	return router
 }

@@ -17,10 +17,10 @@ const (
 	CustomersTableName = "customers"
 	CustomerEmail      = "email"
 	CustomerName       = "name = ?"
-	UsersTableName   = "users"
-	Fieldemail       = "email"
-	Username         = "username = ?"
-	EmailPlaceholder = "email = ?"
+	UsersTableName     = "users"
+	Fieldemail         = "email"
+	Username           = "username = ?"
+	EmailPlaceholder   = "email = ?"
 )
 
 // Success message for user
@@ -119,6 +119,7 @@ const (
 	RedisAddr     = "127.0.0.1:6379"
 	RedisPassword = ""
 	RedisDB       = 0
+	Redis         = "redis"
 )
 
 // claims
@@ -131,4 +132,5 @@ const (
 
 const (
 	RedisTokenCacheKey = "ACTIVE_TOKEN_%s"
+	RedisTokenRemoved  = "token removed in the redis"
 )

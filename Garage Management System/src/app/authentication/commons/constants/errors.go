@@ -18,6 +18,7 @@ const (
 	ErrUnmarshallConfigFailed   = "failed to unmarshal the config file %s"
 	ErrJWTConfigReadFailed      = "failed to read the JWT config file %s"
 	ErrRedisInitFailed          = "failed to initialize redis %s"
+	RedisOperationError         = "error in the redis operation"
 )
 
 const (
@@ -84,9 +85,10 @@ const (
 
 // Request Validation Errors
 const (
-	InvalidPayloadError    = "invalid required payload"
-	UnexpectedValueError   = "unexpected value for the field."
-	LoginReuestFailedError = "login request failed"
+	InvalidPayloadError     = "invalid required payload"
+	UnexpectedValueError    = "unexpected value for the field."
+	LoginReuestFailedError  = "login request failed"
+	LogoutReuestFailedError = "logout request failed"
 )
 
 //Encrypt & Decrypt Erros

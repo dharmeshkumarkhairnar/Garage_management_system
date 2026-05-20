@@ -48,9 +48,15 @@ definitions:
   models.BFFLoginUserResponse:
     properties:
       message:
-        example: user loggedin successfully
+        example: user logged in successfully
         type: string
       token:
+        type: string
+    type: object
+  models.BFFLogoutUserResponse:
+    properties:
+      message:
+        example: user logged out successfully
         type: string
     type: object
   models.ErrorAPIResponse:
@@ -109,6 +115,27 @@ paths:
           schema:
             $ref: '#/definitions/models.BFFLoginUserResponse'
       summary: Login registered user or admin
+      tags:
+      - User
+  /api/auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: Logouts user by deleting token from redis
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            $ref: '#/definitions/models.BFFLogoutUserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BFFLogoutUserResponse'
+      security:
+      - BearerAuth: []
+      summary: Logout registered user or admin
       tags:
       - User
   /api/auth/register:

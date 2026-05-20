@@ -73,6 +73,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/auth/logout": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Logouts user by deleting token from redis",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout registered user or admin",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLogoutUserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLogoutUserResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "description": "Handles customer registration by validating input and storing user details",
@@ -192,10 +226,19 @@ const docTemplate = `{
             "properties": {
                 "message": {
                     "type": "string",
-                    "example": "user loggedin successfully"
+                    "example": "user logged in successfully"
                 },
                 "token": {
                     "type": "string"
+                }
+            }
+        },
+        "models.BFFLogoutUserResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "user logged out successfully"
                 }
             }
         },
