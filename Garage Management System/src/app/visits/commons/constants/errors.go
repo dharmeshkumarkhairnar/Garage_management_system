@@ -5,6 +5,7 @@ const (
 	VehicleNumberPlateAlreadyExistsError = "vehicle with this number plate already exists"
 	UserNotFoundError                    = "user not found"
 	NumberPlateFormatError               = "Number Plate must be in `MH19BW3626` format"
+	VehicleNotFoundError                 = "Vehicle Not Found"
 )
 
 // middleware errors

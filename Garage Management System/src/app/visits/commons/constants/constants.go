@@ -2,7 +2,9 @@ package constants
 
 //Table related constants
 const (
-	VehiclesTableName = "vehicles"
+	VehiclesTableName     = "vehicles"
+	VisitRecordTableName  = "visit_records"
+	VisitServiceTableName = "visit_services"
 )
 
 //Success
@@ -25,7 +27,7 @@ const (
 //constants
 const (
 	User        = "user"
-	NumberPlate = "number plate"
+	NumberPlate = "number_plate = ?"
 )
 
 //middlware constants

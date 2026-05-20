@@ -45,7 +45,7 @@ type VisitRecords struct {
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
 	MechanicID   string    `gorm:"column:mechID" json:"mechID"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
-	DeliveryDate time.Time `gorm:"column:delivery_date;type:date" json:"delivery_date"`
+	DeliveryDate time.Time `gorm:"column:delivery_date;type:date;check:delivery_date>=arrival_date" json:"delivery_date"`
 
 	Vehicle_ID  Vehicles  `gorm:"foreignkey:VehicleID;references:ID"`
 	Mechanic_ID Mechanics `gorm:"foreignkey:MechanicID;references:MechID"`
