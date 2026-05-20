@@ -1,7 +1,7 @@
 package models
 
 type BFFDeleteMechanicRequest struct {
-	AddharNumber string `json:"aadhar_number" example:"112233445566" validate:"required,aadharformat"`
+	MechanicID string `json:"mechanic_id" example:"arijit709" validate:"required"`
 }
 
 type BFFDeleteMechanicResponse struct {

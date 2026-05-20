@@ -7,5 +7,6 @@ type BFFAddMechanicRequest struct {
 }
 
 type BFFAddMechanicResponse struct {
-	Status string `json:"status" example:"Successfully added"`
+	Status     string `json:"status" example:"Successfully added"`
+	MechanicID string `json:"mechanic_id" example:"arijit777"`
 }

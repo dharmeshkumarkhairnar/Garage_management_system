@@ -61,7 +61,7 @@ func (controller *DeleteMechanicHandler) DeleteMechanic(ctx *gin.Context) {
 		return
 	}
 
-	ctx.IndentedJSON(http.StatusCreated, models.BFFAddMechanicResponse{
+	ctx.IndentedJSON(http.StatusCreated, models.BFFDeleteMechanicResponse{
 		Status: constants.MechanicDeletedSuccessfully,
 	})
 

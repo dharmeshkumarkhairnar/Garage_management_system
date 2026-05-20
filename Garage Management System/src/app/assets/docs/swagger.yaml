@@ -16,11 +16,6 @@ definitions:
     - aadhar_number
     - name
     - phoneNumber
-        example: Mukesh roy
-        type: string
-      phone:
-        example: 9881463919
-        type: integer
     type: object
   models.BFFAddMechanicResponse:
     properties:
@@ -52,6 +47,8 @@ definitions:
       aadhar_number:
         example: "112233445566"
         type: string
+    required:
+    - aadhar_number
     type: object
   models.BFFDeleteMechanicResponse:
     properties:

@@ -26,7 +26,7 @@ func (repo *deleteMechanicRepository) DeleteMechanic(ctx context.Context, bffDel
 
 	logger := logrus.New()
 
-	result := repo.gDB.WithContext(ctx).Table(constants.MechanicsTableName).Where(constants.AadharNumberCondition, bffDeleteMechaniceRequest.AddharNumber).Delete(&genModels.Mechanics{})
+	result := repo.gDB.WithContext(ctx).Table(constants.MechanicsTableName).Where(constants.MechIDCondition, bffDeleteMechaniceRequest.MechanicID).Delete(&genModels.Mechanics{})
 	if result.Error != nil {
 		return result.Error
 	}

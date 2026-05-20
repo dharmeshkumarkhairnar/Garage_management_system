@@ -251,9 +251,6 @@ const docTemplate = `{
                     "maximum": 9999999999,
                     "minimum": 1000000000,
                     "example": 8432805566
-                "phone": {
-                    "type": "integer",
-                    "example": 9881463919
                 }
             }
         },
@@ -295,6 +292,9 @@ const docTemplate = `{
         },
         "models.BFFDeleteMechanicRequest": {
             "type": "object",
+            "required": [
+                "aadhar_number"
+            ],
             "properties": {
                 "aadhar_number": {
                     "type": "string",

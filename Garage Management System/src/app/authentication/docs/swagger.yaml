@@ -19,7 +19,6 @@ definitions:
         minLength: 8
         type: string
       phoneNumber:
-        example: 8432805566
         example: 7568912340
         maximum: 9999999999
         minimum: 1000000000
