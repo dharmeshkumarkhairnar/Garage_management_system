@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/vehicles/add-mechanic": {
+        "/api/mechanics/add": {
             "post": {
                 "description": "Handles mechanic add request by validating input and storing mechanics details",
                 "consumes": [
@@ -67,7 +67,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/vehicles/delete-mechanic": {
+        "/api/mechanics/delete": {
             "post": {
                 "description": "Handles mechanic Delete request by validating input.",
                 "consumes": [
@@ -112,6 +112,121 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/services/add": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Adds a new service to the DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Add a new service",
+                "parameters": [
+                    {
+                        "description": "Add Service Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added service successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized role",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Service already exists",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/delete": {
+            "delete": {
+                "description": "Deletes an existing service from the DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Delete an existing service",
+                "parameters": [
+                    {
+                        "description": "Delete Service Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted service successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized role",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -127,8 +242,8 @@ const docTemplate = `{
                     "example": "Mukesh roy"
                 },
                 "phone": {
-                    "type": "string",
-                    "example": "9881463919"
+                    "type": "integer",
+                    "example": 9881463919
                 }
             }
         },
@@ -138,6 +253,33 @@ const docTemplate = `{
                 "status": {
                     "type": "string",
                     "example": "Successfully added"
+                }
+            }
+        },
+        "models.BFFAddNewServiceRequest": {
+            "type": "object",
+            "required": [
+                "service"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "minimum": 99,
+                    "example": 1745.99
+                },
+                "service": {
+                    "type": "string",
+                    "minLength": 3,
+                    "example": "painting"
+                }
+            }
+        },
+        "models.BFFAddNewServiceResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "service added successfully"
                 }
             }
         },
@@ -156,6 +298,28 @@ const docTemplate = `{
                 "status": {
                     "type": "string",
                     "example": "Successfully deleted"
+                }
+            }
+        },
+        "models.BFFDeleteServiceRequest": {
+            "type": "object",
+            "required": [
+                "service"
+            ],
+            "properties": {
+                "service": {
+                    "type": "string",
+                    "minLength": 3,
+                    "example": "painting"
+                }
+            }
+        },
+        "models.BFFDeleteServiceResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "service deleted successfully"
                 }
             }
         },

@@ -22,6 +22,20 @@ func NewAddNewServiceHandler(service *business.AddNewServiceService) *AddNewServ
 	}
 }
 
+// HandleAddNewService handles the requests for adding new services
+// @Summary Add a new service
+// @Description Adds a new service to the DB
+// @Tags Services
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body models.BFFAddNewServiceRequest true "Add Service Request"
+// @Success 200 {object} models.BFFAddNewServiceResponse "Added service successful"
+// @Failure 400 {object} models.BFFAddNewServiceResponse "Invalid input payload"
+// @Failure 401 {object} models.BFFAddNewServiceResponse "Unauthorized role"
+// @Failure 409 {object} models.BFFAddNewServiceResponse "Service already exists"
+// @Failure 500 {object} models.BFFAddNewServiceResponse "Internal Server Error"
+// @Router /api/services/add [post]
 func (controller AddNewServiceHandler) HandleAddNewService(ctx *gin.Context) {
 	var bffAddNewServiceRequest models.BFFAddNewServiceRequest
 

@@ -25,7 +25,7 @@ func NewCreateUserService(createCustomerRepo repository.CreateCustomerRepository
 	}
 }
 
-func (service *CreateCustomerService) CreateNewCustomer(spanCtx context.Context, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
+func (service *CreateCustomerService) CreateNewCustomer(ctx context.Context, bffCreateCustomerRequest models.BFFCreateCustomerRequest) error {
 	tx := service.DB.Begin()
 
 	if tx.Error != nil {
@@ -33,7 +33,7 @@ func (service *CreateCustomerService) CreateNewCustomer(spanCtx context.Context,
 		return fmt.Errorf(constants.ErrBeginTx, tx.Error)
 	}
 
-	err := service.createCustomerRepo.CreateNewCustomer(spanCtx, tx, bffCreateCustomerRequest)
+	err := service.createCustomerRepo.CreateNewCustomer(ctx, bffCreateCustomerRequest)
 	if err != nil {
 		tx.Rollback()
 		return fmt.Errorf("%w", err)

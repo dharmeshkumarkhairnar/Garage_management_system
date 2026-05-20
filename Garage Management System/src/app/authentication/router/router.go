@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
 	files "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -18,7 +19,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetRouter(db *gorm.DB, logger *logrus.Logger) *gin.Engine {
+func GetRouter(db *gorm.DB, logger *logrus.Logger, redisClient *redis.Client) *gin.Engine {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
@@ -36,9 +37,14 @@ func GetRouter(db *gorm.DB, logger *logrus.Logger) *gin.Engine {
 	createCustomerSvc := business.NewCreateUserService(createCustomerRepo, db, logger)
 	createCustomerHandler := handlers.NewCreateCustomerHandler(createCustomerSvc)
 
+	loginUserRepository := repository.NewLoginUserRepository(db, logger)
+	loginUserService := business.NewLoginUserService(db, redisClient, loginUserRepository)
+	loginUserHandler := handlers.NewLoginUserHandler(loginUserService)
+
 	AuthGroup := router.Group(constants.AuthRoutePrefix)
 	{
-		AuthGroup.POST(constants.RegisterCustomerRoute, createCustomerHandler.HandleCreateCustomer)
+		AuthGroup.POST(constants.RegisterRoute, createCustomerHandler.HandleCreateCustomer)
+		AuthGroup.POST(constants.LoginUserRoute, loginUserHandler.HandleLoginUSer)
 	}
 	return router
 }

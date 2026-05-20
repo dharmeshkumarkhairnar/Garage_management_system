@@ -11,13 +11,13 @@ import (
 
 var secretKey *models.JWT
 
-func GenerateToken(userID uint64,role string) (string, error) {
+func GenerateToken(userID uint64, role string) (string, error) {
 
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": userID,
-		"role":role,
-		"iat": time.Now().Unix(),
-		"exp": time.Now().Add(time.Hour * 24).Unix(),
+		"sub":  userID,
+		"role": role,
+		"iat":  time.Now().Unix(),
+		"exp":  time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	accessTokenString, err := accessToken.SignedString([]byte(secretKey.AccessSecretKey))
@@ -62,5 +62,5 @@ func VerifyToken(token *jwt.Token) (jwt.MapClaims, error) {
 }
 
 func InitJWTConfig() {
-	secretKey = &models.JWT{AccessSecretKey: "Apr/meTe4sxpBwxb36ISTRNnHc4y+Y34KjQ/ntwB1Kw=",RefreshSecretKey: "uFEnDER3W78vCqGX86jsbfDzrGsutR8m06+d1ya3JK0="}
+	secretKey = &models.JWT{AccessSecretKey: "Apr/meTe4sxpBwxb36ISTRNnHc4y+Y34KjQ/ntwB1Kw=", RefreshSecretKey: "uFEnDER3W78vCqGX86jsbfDzrGsutR8m06+d1ya3JK0="}
 }

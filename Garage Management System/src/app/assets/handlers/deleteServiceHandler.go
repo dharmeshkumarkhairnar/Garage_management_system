@@ -22,6 +22,19 @@ func NewDeleteServiceHandler(service *business.DeleteServiceService) *DeleteServ
 	}
 }
 
+// HandleDeleteService handles the requests for deleting existing services
+// @Summary Delete an existing service
+// @Description Deletes an existing service from the DB
+// @Tags Services
+// @Accept json
+// @Produce json
+// @Securirt BearerAuth
+// @Param request body models.BFFDeleteServiceRequest true "Delete Service Request"
+// @Success 200 {object} models.BFFDeleteServiceResponse "Deleted service successful"
+// @Failure 400 {object} models.BFFDeleteServiceResponse "Invalid input payload"
+// @Failure 401 {object} models.BFFDeleteServiceResponse "Unauthorized role"
+// @Failure 500 {object} models.BFFDeleteServiceResponse "Internal Server Error"
+// @Router /api/services/delete [delete]
 func (controller DeleteServiceHandler) HandleDeleteService(ctx *gin.Context) {
 	serviceName := strings.ToLower(ctx.Param("serviceName"))
 
@@ -49,7 +62,7 @@ func (controller DeleteServiceHandler) HandleDeleteService(ctx *gin.Context) {
 		return
 	}
 
-	ctx.IndentedJSON(http.StatusOK, models.BFFDeleteerviceResponse{
+	ctx.IndentedJSON(http.StatusOK, models.BFFDeleteServiceResponse{
 		Message: "service deleted successfully",
 	})
 }

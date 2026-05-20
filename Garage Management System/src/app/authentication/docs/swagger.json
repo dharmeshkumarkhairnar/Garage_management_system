@@ -7,7 +7,65 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/auth/register/customer": {
+        "/api/auth/login": {
+            "post": {
+                "description": "Authenticates user and returns JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login registered user or admin",
+                "parameters": [
+                    {
+                        "description": "User Sign In Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
             "post": {
                 "description": "Handles customer registration by validating input and storing user details",
                 "consumes": [
@@ -17,7 +75,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Customer"
+                    "User"
                 ],
                 "summary": "Create a new customer",
                 "parameters": [
@@ -93,8 +151,43 @@
                     "example": "Admin@123"
                 },
                 "phoneNumber": {
+                    "type": "integer",
+                    "maximum": 9999999999,
+                    "minimum": 1000000000,
+                    "example": 7568912340
+                }
+            }
+        },
+        "models.BFFLoginUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "role"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
                     "type": "string",
-                    "example": "7568912340"
+                    "example": "Admin@123"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "customer or admin"
+                }
+            }
+        },
+        "models.BFFLoginUserResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "user loggedin successfully"
+                },
+                "token": {
+                    "type": "string"
                 }
             }
         },

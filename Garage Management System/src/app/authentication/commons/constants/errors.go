@@ -5,7 +5,7 @@ const (
 	ErrBeginTx            = "failed to begin database transaction: %w"
 	ErrCommitTx           = "failed to commit database transaction: %w"
 	ErrDBConnectionFailed = "Error connecting to database: %s"
-	ErrInternalServer     = "internal server error"
+	InternalServerError   = "internal server error"
 )
 
 // Database Initialization & Config Errors
@@ -88,8 +88,9 @@ const (
 
 // Request Validation Errors
 const (
-	ErrInvalidPayload  = "invalid required payload"
-	ErrUnexpectedValue = "unexpected value for the field."
+	InvalidPayloadError    = "invalid required payload"
+	UnexpectedValueError   = "unexpected value for the field."
+	LoginReuestFailedError = "login request failed"
 )
 
 //Encrypt & Decrypt Erros
@@ -100,22 +101,24 @@ const (
 //Signin and Token generation Errors
 const (
 	ErrInvalidEmailorPassword = "invalid email or password"
-	ErrPasswordMismatch       = "password does not match %w"
+	PasswordMismatchError     = "password does not match %w"
 	ErrAuthenticationFailed   = "authentication failed"
 	ErrTokenGenerationFailed  = "failed to generate authentication tokens %s"
 )
 
 const (
-	ErrSignInFailed      = "failed to sign in user"
-	ErrUserNotFound      = "user not found"
-	ErrIncorrectPassword = "entered password is not correct"
-	ErrOtpsMismatch      = "OTPs did not match"
-	ErrExpiredOtp        = "OTP expired"
-	ErrIncorrectOtp      = "entered OTP is not correct"
-	ErrInvalidOtp        = "OTP must be a 4 digit number"
-	ErrJWTExpired        = "Token Expired"
-	ErrJWTInvalid        = "Invalid Token"
-	ErrJWTUnauthorized   = "Unauthorized"
+	ErrSignInFailed          = "failed to sign in user"
+	UserNotFoundError        = "user not found"
+	IncorrectPasswordError   = "entered password is not correct"
+	RoleMismatchError        = "unauthorized role"
+	ErrOtpsMismatch          = "OTPs did not match"
+	ErrExpiredOtp            = "OTP expired"
+	ErrIncorrectOtp          = "entered OTP is not correct"
+	ErrInvalidOtp            = "OTP must be a 4 digit number"
+	ErrJWTExpired            = "Token Expired"
+	ErrJWTInvalid            = "Invalid Token"
+	ErrJWTUnauthorized       = "Unauthorized"
+	UnauthorizedRequestError = "unauthorized request"
 )
 
 const (

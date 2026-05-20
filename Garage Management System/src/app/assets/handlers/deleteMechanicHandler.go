@@ -31,7 +31,7 @@ func NewDeleteMechanicHandler(service *business.DeleteMechanicService) *DeleteMe
 // @Success 200 {object} models.BFFDeleteMechanicResponse "mechanic Deleted successfully"
 // @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server error"
-// @Router /api/vehicles/delete-mechanic [post]
+// @Router /api/mechanics/delete [post]
 func (controller *DeleteMechanicHandler) DeleteMechanic(ctx *gin.Context) {
 
 	var bffDeleteMechanicRequest models.BFFDeleteMechanicRequest

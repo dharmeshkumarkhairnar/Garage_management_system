@@ -15,9 +15,10 @@ const (
 
 // Database table name & field names for users
 const (
-	UsersTableName = "users"
-	Fieldemail     = "email"
-	Username       = "username = ?"
+	UsersTableName   = "users"
+	Fieldemail       = "email"
+	Username         = "username = ?"
+	EmailPlaceholder = "email = ?"
 )
 
 // Success message for user
@@ -130,4 +131,8 @@ const (
 	Sub        = "sub"
 	JTI        = "jti"
 	DeviceType = "device_type"
+)
+
+const (
+	RedisTokenCacheKey = "ACTIVE_TOKEN_%s"
 )

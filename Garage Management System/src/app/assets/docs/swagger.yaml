@@ -8,13 +8,32 @@ definitions:
         example: Mukesh roy
         type: string
       phone:
-        example: "9881463919"
-        type: string
+        example: 9881463919
+        type: integer
     type: object
   models.BFFAddMechanicResponse:
     properties:
       status:
         example: Successfully added
+        type: string
+    type: object
+  models.BFFAddNewServiceRequest:
+    properties:
+      amount:
+        example: 1745.99
+        minimum: 99
+        type: number
+      service:
+        example: painting
+        minLength: 3
+        type: string
+    required:
+    - service
+    type: object
+  models.BFFAddNewServiceResponse:
+    properties:
+      message:
+        example: service added successfully
         type: string
     type: object
   models.BFFDeleteMechanicRequest:
@@ -27,6 +46,21 @@ definitions:
     properties:
       status:
         example: Successfully deleted
+        type: string
+    type: object
+  models.BFFDeleteServiceRequest:
+    properties:
+      service:
+        example: painting
+        minLength: 3
+        type: string
+    required:
+    - service
+    type: object
+  models.BFFDeleteServiceResponse:
+    properties:
+      message:
+        example: service deleted successfully
         type: string
     type: object
   models.ErrorAPIResponse:
@@ -46,7 +80,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/vehicles/add-mechanic:
+  /api/mechanics/add:
     post:
       consumes:
       - application/json
@@ -81,7 +115,7 @@ paths:
       summary: Adds new mechanic
       tags:
       - Mechanics
-  /api/vehicles/delete-mechanic:
+  /api/mechanics/delete:
     post:
       consumes:
       - application/json
@@ -111,4 +145,78 @@ paths:
       summary: Delete mechanic
       tags:
       - Mechanics
+  /api/services/add:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new service to the DB
+      parameters:
+      - description: Add Service Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFAddNewServiceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Added service successful
+          schema:
+            $ref: '#/definitions/models.BFFAddNewServiceResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.BFFAddNewServiceResponse'
+        "401":
+          description: Unauthorized role
+          schema:
+            $ref: '#/definitions/models.BFFAddNewServiceResponse'
+        "409":
+          description: Service already exists
+          schema:
+            $ref: '#/definitions/models.BFFAddNewServiceResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BFFAddNewServiceResponse'
+      security:
+      - BearerAuth: []
+      summary: Add a new service
+      tags:
+      - Services
+  /api/services/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes an existing service from the DB
+      parameters:
+      - description: Delete Service Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFDeleteServiceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Deleted service successful
+          schema:
+            $ref: '#/definitions/models.BFFDeleteServiceResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.BFFDeleteServiceResponse'
+        "401":
+          description: Unauthorized role
+          schema:
+            $ref: '#/definitions/models.BFFDeleteServiceResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.BFFDeleteServiceResponse'
+      summary: Delete an existing service
+      tags:
+      - Services
 swagger: "2.0"

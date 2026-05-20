@@ -4,6 +4,10 @@ import (
 	"garage_management_system/src/app/authentication/router"
 	"garage_management_system/src/utils"
 	"garage_management_system/src/utils/database"
+	utilsRedis "garage_management_system/src/utils/redis"
+
+	"github.com/redis/go-redis/v9"
+
 	"log"
 
 	"github.com/sirupsen/logrus"
@@ -24,25 +28,26 @@ func main() {
 		log.Fatalf("Failed to initialize database: %v", err)
 	}
 
-	// err = redis.InitRedis()
-	// if err != nil {
-	// 	log.Fatalf("Failed to initialize redis: %v", err)
-	// }
+	err = utilsRedis.InitRedis()
+	if err != nil {
+		log.Fatalf("Failed to initialize redis: %v", err)
+	}
 
 	//Initialised for JWT token
 	utils.InitJWTConfig()
 
 	db := database.GetDB()
+	redisClient := utilsRedis.GetRedisClient()
 
 	logger := logrus.New()
 	logger.SetFormatter(&logrus.JSONFormatter{
 		PrettyPrint: true,
 	})
 
-	startRouter(db.DB, logger)
+	startRouter(db.DB, logger, redisClient)
 }
 
-func startRouter(db *gorm.DB, logger *logrus.Logger) {
-	router := router.GetRouter(db, logger)
+func startRouter(db *gorm.DB, logger *logrus.Logger, redisClient *redis.Client) {
+	router := router.GetRouter(db, logger, redisClient)
 	router.Run(":8080")
 }
