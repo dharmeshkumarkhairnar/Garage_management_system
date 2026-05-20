@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
-	"garage_management_system/src/app/visits/constants"
+	"garage_management_system/src/app/visits/commons/constants"
 	"garage_management_system/src/app/visits/models"
 	genModels "garage_management_system/src/models"
 	"strings"

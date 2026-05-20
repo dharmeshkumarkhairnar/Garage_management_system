@@ -3,10 +3,11 @@ package handlers
 import (
 	"encoding/json"
 	"garage_management_system/src/app/visits/business"
-	"garage_management_system/src/app/visits/constants"
+	"garage_management_system/src/app/visits/commons/constants"
 	visitModels "garage_management_system/src/app/visits/models"
 	"garage_management_system/src/models"
 	commonModels "garage_management_system/src/models"
+	"garage_management_system/src/utils/validations"
 	"net/http"
 	"strings"
 
@@ -38,7 +39,7 @@ func NewCreateVehicleHandler(service *business.CreateVehicleService) *CreaterVeh
 // @Router /api/vehicles/create-vehicle [post]
 func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
 
-	userID:=ctx.GetUint64(constants.UserId)
+	userID := ctx.GetUint64(constants.UserId)
 
 	var bffCreateVehicleRequest visitModels.BFFCreateVehicleRequest
 
@@ -51,13 +52,13 @@ func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
 		return
 	}
 
-	// if err := validations.GetBFFValidator().Struct(&bffCreateUserRequest); err != nil {
-	// 	validationErros, _ := validations.FormatValidationErrors(err)
-	// 	ctx.IndentedJSON(http.StatusBadRequest, validationErros)
-	// 	return
-	// }
+	if err := validations.GetBFFValidator().Struct(&bffCreateVehicleRequest); err != nil {
+		validationErros, _ := validations.FormatValidationErrors(err)
+		ctx.IndentedJSON(http.StatusBadRequest, validationErros)
+		return
+	}
 
-	err := controller.service.CreateVehicle(ctx, userID , ctx.Request.Context(), bffCreateVehicleRequest)
+	err := controller.service.CreateVehicle(ctx, userID, ctx.Request.Context(), bffCreateVehicleRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), constants.VehicleNumberPlateAlreadyExistsError) {
 			errorMsg := models.ErrorMessage{Key: "number plate", ErrorMessage: constants.VehicleNumberPlateAlreadyExistsError}
