@@ -251,9 +251,6 @@ const docTemplate = `{
                     "maximum": 9999999999,
                     "minimum": 1000000000,
                     "example": 8432805566
-                "phone": {
-                    "type": "integer",
-                    "example": 9881463919
                 }
             }
         },
@@ -295,6 +292,9 @@ const docTemplate = `{
         },
         "models.BFFDeleteMechanicRequest": {
             "type": "object",
+            "required": [
+                "aadhar_number"
+            ],
             "properties": {
                 "aadhar_number": {
                     "type": "string",
@@ -355,17 +355,25 @@ const docTemplate = `{
                 }
             }
         }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "x-extension-openapi": "{\"example\": \"value on a json format\"}"
+        }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
+	Version:          "1.0",
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Service Operations API",
+	Description:      "Services API for Garage Management System",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

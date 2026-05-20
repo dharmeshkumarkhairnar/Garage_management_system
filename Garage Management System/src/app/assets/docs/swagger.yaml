@@ -16,11 +16,6 @@ definitions:
     - aadhar_number
     - name
     - phoneNumber
-        example: Mukesh roy
-        type: string
-      phone:
-        example: 9881463919
-        type: integer
     type: object
   models.BFFAddMechanicResponse:
     properties:
@@ -52,6 +47,8 @@ definitions:
       aadhar_number:
         example: "112233445566"
         type: string
+    required:
+    - aadhar_number
     type: object
   models.BFFDeleteMechanicResponse:
     properties:
@@ -90,6 +87,9 @@ definitions:
     type: object
 info:
   contact: {}
+  description: Services API for Garage Management System
+  title: Service Operations API
+  version: "1.0"
 paths:
   /api/mechanics/add:
     post:
@@ -230,4 +230,10 @@ paths:
       summary: Delete an existing service
       tags:
       - Services
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+    x-extension-openapi: '{"example": "value on a json format"}'
 swagger: "2.0"

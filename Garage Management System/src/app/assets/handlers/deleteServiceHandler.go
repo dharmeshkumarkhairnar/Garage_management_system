@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"garage_management_system/src/app/assets/business"
 	"garage_management_system/src/app/assets/commons/constants"
@@ -36,9 +37,18 @@ func NewDeleteServiceHandler(service *business.DeleteServiceService) *DeleteServ
 // @Failure 500 {object} models.BFFDeleteServiceResponse "Internal Server Error"
 // @Router /api/services/delete [delete]
 func (controller DeleteServiceHandler) HandleDeleteService(ctx *gin.Context) {
-	serviceName := strings.ToLower(ctx.Param("serviceName"))
+	
+	var bffDeleteServiceRequest models.BFFDeleteServiceRequest
 
-	err := controller.service.DeleteService(ctx.Request.Context(), serviceName)
+	if err := ctx.ShouldBind(&bffDeleteServiceRequest); err != nil {
+		errMsgs := models.ErrorMessage{Key: err.(*json.UnmarshalTypeError).Field, ErrorMessage: constants.ErrUnexpectedValue}
+		ctx.IndentedJSON(http.StatusBadRequest, models.ErrorAPIResponse{
+			Message: errMsgs, Error: constants.ErrInvalidPayload,
+		})
+		return
+	}
+
+	err := controller.service.DeleteService(ctx.Request.Context(), bffDeleteServiceRequest.Service)
 	if err != nil {
 		fmt.Println("ERROR: ", err)
 		if strings.Contains(err.Error(), constants.ServiceDoesNotExist) {

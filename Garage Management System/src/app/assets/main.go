@@ -10,6 +10,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// @title Service Operations API
+// @version 1.0
+// @description Services API for Garage Management System
+// @query.collection.format multi
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @x-extension-openapi {"example": "value on a json format"}
 func main() {
 	err := database.InitDB()
 	if err != nil {
