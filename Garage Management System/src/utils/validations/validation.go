@@ -2,8 +2,9 @@ package validations
 
 import (
 	"fmt"
-	consts "garage_management_system/src/app/assets/commons/constants"
+	Assestconst "garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/authentication/commons/constants"
+	VisitConst "garage_management_system/src/app/visits/commons/constants"
 	"garage_management_system/src/models"
 	"regexp"
 	"strconv"
@@ -37,8 +38,10 @@ func FormatValidationErrors(err error) ([]models.ErrorMessage, string) {
 				if err.Tag() == "required" {
 					errorMsg = constants.ErrInvalidEmail
 				}
-			case consts.FieldMechanicAadharNumber:
-				errorMsg = consts.AadharFormatError
+			case Assestconst.FieldMechanicAadharNumber:
+				errorMsg = Assestconst.AadharFormatError
+			case VisitConst.FieldNumberPlate:
+				errorMsg = VisitConst.NumberPlateFormatError
 			default:
 				errorMsg = fmt.Sprintf(constants.ErrInvalidValue, err.Field())
 			}
@@ -71,6 +74,13 @@ func aadharFormatValidator(f1 validator.FieldLevel) bool {
 	}
 	return true
 }
+
+func numberPlateFormatValidator(f1 validator.FieldLevel) bool {
+	re := regexp2.MustCompile(VisitConst.NumberPlateRegex, 0)
+	matched, _ := re.MatchString(f1.Field().String())
+	return matched
+}
+
 func IsEmailValid(f1 validator.FieldLevel) bool {
 	email := f1.Field().String()
 	parts := strings.Split(email, "@")
@@ -102,6 +112,7 @@ func init() {
 	bffValidator.RegisterValidation("strongPassword", strongPasswordValidator)
 	bffValidator.RegisterValidation("Email", IsEmailValid)
 	bffValidator.RegisterValidation("aadharformat", aadharFormatValidator)
+	bffValidator.RegisterValidation("numPlateFormat", numberPlateFormatValidator)
 }
 
 func GetBFFValidator() *validator.Validate {

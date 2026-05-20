@@ -1,20 +1,20 @@
 definitions:
   models.BFFCreateVehicleRequest:
     properties:
-      customer_id:
-        example: 12
-        type: integer
       model:
         example: Dezire
         type: string
       number_plate:
         example: MH19BW3626
         type: string
+    required:
+    - model
+    - number_plate
     type: object
   models.BFFCreateVehicleResponse:
     properties:
       status:
-        example: Successfully created
+        example: Successfully Created
         type: string
     type: object
   models.ErrorAPIResponse:
@@ -59,7 +59,7 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
         "404":
-          description: user not found
+          description: User not found
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
         "409":

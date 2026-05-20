@@ -41,3 +41,13 @@ const (
 	ActiveToken   = "ACTIVE_TOKEN_%s"
 	Redis         = "redis"
 )
+
+//validation
+const (
+	NumberPlateRegex = "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$"
+)
+
+//database
+const (
+	FieldNumberPlate = "NumberPlate"
+)

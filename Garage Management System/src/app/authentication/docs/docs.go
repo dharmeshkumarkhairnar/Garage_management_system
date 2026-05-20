@@ -162,7 +162,6 @@ const docTemplate = `{
                     "type": "integer",
                     "maximum": 9999999999,
                     "minimum": 1000000000,
-                    "example": 8432805566
                     "example": 7568912340
                 }
             }

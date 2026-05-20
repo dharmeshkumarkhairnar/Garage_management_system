@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"fmt"
-	"garage_management_system/src/app/visits/constants"
+	"garage_management_system/src/app/visits/commons/constants"
 	"garage_management_system/src/app/visits/models"
 	genConst "garage_management_system/src/constants"
 	genModels "garage_management_system/src/models"

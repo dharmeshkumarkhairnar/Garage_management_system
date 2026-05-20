@@ -53,7 +53,7 @@ const docTemplate = `{
                         }
                     },
                     "404": {
-                        "description": "user not found",
+                        "description": "User not found",
                         "schema": {
                             "$ref": "#/definitions/models.ErrorAPIResponse"
                         }
@@ -77,11 +77,11 @@ const docTemplate = `{
     "definitions": {
         "models.BFFCreateVehicleRequest": {
             "type": "object",
+            "required": [
+                "model",
+                "number_plate"
+            ],
             "properties": {
-                "customer_id": {
-                    "type": "integer",
-                    "example": 12
-                },
                 "model": {
                     "type": "string",
                     "example": "Dezire"
@@ -97,7 +97,7 @@ const docTemplate = `{
             "properties": {
                 "status": {
                     "type": "string",
-                    "example": "Successfully created"
+                    "example": "Successfully Created"
                 }
             }
         },
