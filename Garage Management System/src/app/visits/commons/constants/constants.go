@@ -2,9 +2,10 @@ package constants
 
 //Table related constants
 const (
-	VehiclesTableName     = "vehicles"
-	VisitRecordTableName  = "visit_records"
-	VisitServiceTableName = "visit_services"
+	VehiclesTableName      = "vehicles"
+	VisitRecordTableName   = "visit_records"
+	VisitServiceTableName  = "visit_services"
+	ServiceMasterTableName = "service_masters"
 )
 
 //Success
