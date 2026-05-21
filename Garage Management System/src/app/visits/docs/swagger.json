@@ -61,9 +61,112 @@
                     }
                 }
             }
+        },
+        "/api/visits/add-record": {
+            "post": {
+                "description": "Handles Vehicle registration by validating input and storing Vehicle details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Visits"
+                ],
+                "summary": "Create a new Vehicle",
+                "parameters": [
+                    {
+                        "description": "Vehicle Registration Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddVisitRecordsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddVisitRecordsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Duplicate value in request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "models.BFFAddVisitRecordsRequest": {
+            "type": "object",
+            "required": [
+                "mechanic_id",
+                "number_plate"
+            ],
+            "properties": {
+                "arrival_date": {
+                    "type": "string",
+                    "example": "2026-05-20"
+                },
+                "delivery_date": {
+                    "type": "string",
+                    "example": "2026-05-20"
+                },
+                "mechanic_id": {
+                    "type": "string",
+                    "example": "firstname012"
+                },
+                "number_plate": {
+                    "type": "string",
+                    "example": "MH19BW3626"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "[painting",
+                        "denting",
+                        "oiling]"
+                    ]
+                }
+            }
+        },
+        "models.BFFAddVisitRecordsResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "Visit Records Added Sucessfully"
+                }
+            }
+        },
         "models.BFFCreateVehicleRequest": {
             "type": "object",
             "required": [

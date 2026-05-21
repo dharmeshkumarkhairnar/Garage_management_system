@@ -1,4 +1,36 @@
 definitions:
+  models.BFFAddVisitRecordsRequest:
+    properties:
+      arrival_date:
+        example: "2026-05-20"
+        type: string
+      delivery_date:
+        example: "2026-05-20"
+        type: string
+      mechanic_id:
+        example: firstname012
+        type: string
+      number_plate:
+        example: MH19BW3626
+        type: string
+      services:
+        example:
+        - '[painting'
+        - denting
+        - oiling]
+        items:
+          type: string
+        type: array
+    required:
+    - mechanic_id
+    - number_plate
+    type: object
+  models.BFFAddVisitRecordsResponse:
+    properties:
+      status:
+        example: Visit Records Added Sucessfully
+        type: string
+    type: object
   models.BFFCreateVehicleRequest:
     properties:
       model:
@@ -73,4 +105,43 @@ paths:
       summary: Create a new Vehicle
       tags:
       - Vehicles
+  /api/visits/add-record:
+    post:
+      consumes:
+      - application/json
+      description: Handles Vehicle registration by validating input and storing Vehicle
+        details
+      parameters:
+      - description: Vehicle Registration Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFAddVisitRecordsRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/models.BFFAddVisitRecordsResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "409":
+          description: Duplicate value in request
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+      summary: Create a new Vehicle
+      tags:
+      - Visits
 swagger: "2.0"

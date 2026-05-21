@@ -15,7 +15,9 @@ import (
 )
 
 type AddVisitRecordsRepository interface {
-	AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error
+	AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) (*genModels.VisitRecords, error)
+	GetServiceIds(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) (*[]genModels.ServiceMaster, error)
+	AddVisitServices(ctx context.Context, data []map[string]interface{}) error
 }
 
 type addVisitRecordsRepository struct {
@@ -26,7 +28,7 @@ func NewAddVisitRecordsRepository(gDB *gorm.DB) *addVisitRecordsRepository {
 	return &addVisitRecordsRepository{gDB: gDB}
 }
 
-func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error {
+func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) (*genModels.VisitRecords, error) {
 
 	logger := logrus.New()
 
@@ -34,11 +36,11 @@ func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 
 	err := repo.gDB.WithContext(ctx).Table(constants.VehiclesTableName).Where(constants.NumberPlate, bffAddVisitRecordsRequest.NumberPlate).First(&vehicles).Error
 	if err != nil {
-		return errors.New(constants.VehicleNotFoundError)
+		return nil, errors.New(constants.VehicleNotFoundError)
 	}
 
-	arrivalTime, _ := time.Parse("2026-05-20", bffAddVisitRecordsRequest.ArrivalDate)
-	deliveryTime, _ := time.Parse("2026-05-20", bffAddVisitRecordsRequest.DeliveryDate)
+	arrivalTime, _ := time.Parse(time.DateOnly, bffAddVisitRecordsRequest.ArrivalDate)
+	deliveryTime, _ := time.Parse(time.DateOnly, bffAddVisitRecordsRequest.DeliveryDate)
 
 	VisitRecord := genModels.VisitRecords{
 		VehicleID:    vehicles.ID,
@@ -49,17 +51,14 @@ func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 
 	result := repo.gDB.WithContext(ctx).Clauses(clause.Returning{}).Table(constants.VisitRecordTableName).Create(&VisitRecord)
 	if result.Error != nil {
-		return errors.New("Database Insertion Error")
+		return nil, errors.New("Database Insertion Error")
 	}
 
-	
-	
-
 	logger.Info("Visit Records Added Successfully")
-	return nil
+	return &VisitRecord, nil
 }
 
-func (repo *addVisitRecordsRepository) AddVisitServices(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error {
+func (repo *addVisitRecordsRepository) GetServiceIds(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) (*[]genModels.ServiceMaster, error) {
 
 	logger := logrus.New()
 
@@ -71,9 +70,24 @@ func (repo *addVisitRecordsRepository) AddVisitServices(ctx context.Context, bff
 		Find(&services).Error
 
 	if err != nil {
+		return nil, errors.New("Record Not Found")
+	}
+
+	logger.Info("Visit ServiceId Fetched Successfully")
+	return &services, nil
+}
+
+func (repo *addVisitRecordsRepository) AddVisitServices(ctx context.Context, data []map[string]interface{}) error {
+
+	logger := logrus.New()
+
+	err := repo.gDB.WithContext(ctx).
+		Table(constants.VisitServiceTableName).Create(data).Error
+
+	if err != nil {
 		return errors.New("Record Not Found")
 	}
 
-	logger.Info("Visit Records Added Successfully")
+	logger.Info("Visit services addded Successfully")
 	return nil
 }

@@ -25,7 +25,7 @@ func NewAddVisitRecordHandler(service *business.AddVisitRecordService) *AddVisit
 // HandlerCreaterVehicle handles the Vehicle creation request.
 // @Summary Create a new Vehicle
 // @Description Handles Vehicle registration by validating input and storing Vehicle details
-// @Tags Vehicles
+// @Tags Visits
 // @Accept json
 // @Produce json
 // @Param request body models.BFFAddVisitRecordsRequest true "Vehicle Registration Request"
@@ -34,7 +34,7 @@ func NewAddVisitRecordHandler(service *business.AddVisitRecordService) *AddVisit
 // @Failure 404 {object} models.ErrorAPIResponse "User not found"
 // @Failure 409 {object} models.ErrorAPIResponse "Duplicate value in request"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
-// @Router /api/vehicles/create-vehicle [post]
+// @Router /api/visits/add-record [post]
 func (controller *AddVisitRecordHandler) AddVisitRecord(ctx *gin.Context) {
 
 	var bffAddVisitRecordsRequest visitModels.BFFAddVisitRecordsRequest
