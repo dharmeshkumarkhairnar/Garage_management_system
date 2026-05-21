@@ -9,7 +9,8 @@ const (
 
 //Success
 const (
-	VehicleCreationSuccess = "vehicle created successfully"
+	VehicleCreationSuccess     = "vehicle created successfully"
+	VisitRecordCreationSuccess = "visit record created successfully"
 )
 
 //constant errors from Database

@@ -37,7 +37,7 @@ func NewCreateVehicleHandler(service *business.CreateVehicleService) *CreaterVeh
 // @Failure 409 {object} models.ErrorAPIResponse "Duplicate value in request"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
 // @Router /api/vehicles/create-vehicle [post]
-func (controller *CreaterVehicleHandler) CreaterVehicle(ctx *gin.Context) {
+func (controller *CreaterVehicleHandler) CreateVehicle(ctx *gin.Context) {
 
 	userID := ctx.GetUint64(constants.UserId)
 

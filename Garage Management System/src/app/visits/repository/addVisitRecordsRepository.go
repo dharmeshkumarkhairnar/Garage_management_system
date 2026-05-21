@@ -7,9 +7,11 @@ import (
 	"garage_management_system/src/app/visits/models"
 	genModels "garage_management_system/src/models"
 	genericModels "garage_management_system/src/models"
+	"time"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type AddVisitRecordsRepository interface {
@@ -35,17 +37,23 @@ func (user *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 		return errors.New(constants.VehicleNotFoundError)
 	}
 
+	arrivalTime, _ := time.Parse("2026-05-20", bffAddVisitRecordsRequest.ArrivalDate)
+	deliveryTime, _ := time.Parse("2026-05-20", bffAddVisitRecordsRequest.DeliveryDate)
+
 	VisitRecord := genModels.VisitRecords{
 		VehicleID:    vehicles.ID,
 		MechanicID:   bffAddVisitRecordsRequest.MechanicId,
-		ArrivalDate:  bffAddVisitRecordsRequest.ArrivalDate,
-		DeliveryDate: bffAddVisitRecordsRequest.DeliveryDate,
+		ArrivalDate:  arrivalTime,
+		DeliveryDate: deliveryTime,
 	}
 
-	result := user.gDB.WithContext(ctx).Table(constants.VisitRecordTableName).Create(&VisitRecord)
+	result := user.gDB.WithContext(ctx).Clauses(clause.Returning{}).Table(constants.VisitRecordTableName).Create(&VisitRecord)
 	if result.Error != nil {
 		return errors.New("Database Insertion Error")
 	}
+
+	
+	
 
 	logger.Info("Visit Records Added Successfully")
 	return nil
