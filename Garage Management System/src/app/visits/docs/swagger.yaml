@@ -15,9 +15,9 @@ definitions:
         type: string
       services:
         example:
-        - '[painting'
+        - painting
         - denting
-        - oiling]
+        - oiling
         items:
           type: string
         type: array

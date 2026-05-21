@@ -162,9 +162,9 @@ const docTemplate = `{
                         "type": "string"
                     },
                     "example": [
-                        "[painting",
+                        "painting",
                         "denting",
-                        "oiling]"
+                        "oiling"
                     ]
                 }
             }

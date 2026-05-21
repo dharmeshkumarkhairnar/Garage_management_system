@@ -6,6 +6,10 @@ const (
 	UserNotFoundError                    = "user not found"
 	NumberPlateFormatError               = "Number Plate must be in `MH19BW3626` format"
 	VehicleNotFoundError                 = "Vehicle Not Found"
+	MechanicIDFormatError                = "Length of MechanicId must range between 1-32 followed by 3 digit numbers"
+	ArrivalDateFormatError               = "Arrival Date must be in format YYYY-MM-DD"
+	DeliveryDateFormatError              = "Delivery Date must be in format YYYY-MM-DD"
+	DeliveryDateError                    = "Delivery Date must be greater than or equal to Arrival Date"
 )
 
 // middleware errors
