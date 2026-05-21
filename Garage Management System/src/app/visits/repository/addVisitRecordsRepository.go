@@ -26,13 +26,13 @@ func NewAddVisitRecordsRepository(gDB *gorm.DB) *addVisitRecordsRepository {
 	return &addVisitRecordsRepository{gDB: gDB}
 }
 
-func (user *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error {
+func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error {
 
 	logger := logrus.New()
 
 	var vehicles genericModels.Vehicles
 
-	err := user.gDB.WithContext(ctx).Table(constants.VehiclesTableName).Where(constants.NumberPlate, bffAddVisitRecordsRequest.NumberPlate).First(&vehicles).Error
+	err := repo.gDB.WithContext(ctx).Table(constants.VehiclesTableName).Where(constants.NumberPlate, bffAddVisitRecordsRequest.NumberPlate).First(&vehicles).Error
 	if err != nil {
 		return errors.New(constants.VehicleNotFoundError)
 	}
@@ -47,7 +47,7 @@ func (user *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 		DeliveryDate: deliveryTime,
 	}
 
-	result := user.gDB.WithContext(ctx).Clauses(clause.Returning{}).Table(constants.VisitRecordTableName).Create(&VisitRecord)
+	result := repo.gDB.WithContext(ctx).Clauses(clause.Returning{}).Table(constants.VisitRecordTableName).Create(&VisitRecord)
 	if result.Error != nil {
 		return errors.New("Database Insertion Error")
 	}
@@ -59,17 +59,21 @@ func (user *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 	return nil
 }
 
-func (user *addVisitRecordsRepository) AddVisitServices(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) ([]string, *genModels.VisitServices, error) {
+func (repo *addVisitRecordsRepository) AddVisitServices(ctx context.Context, bffAddVisitRecordsRequest models.BFFAddVisitRecordsRequest) error {
 
 	logger := logrus.New()
 
-	var services genericModels.VisitServices
+	var services []genericModels.ServiceMaster
 
-	err := user.gDB.WithContext(ctx).Find(&services).Error
+	err := repo.gDB.WithContext(ctx).
+		Table(constants.ServiceMasterTableName).
+		Where("service IN ?", bffAddVisitRecordsRequest.Services). // Matches all names in the list
+		Find(&services).Error
+
 	if err != nil {
-		return nil, nil, errors.New("No Services Found")
+		return errors.New("Record Not Found")
 	}
 
 	logger.Info("Visit Records Added Successfully")
-	return bffAddVisitRecordsRequest.Services, &services, nil
+	return nil
 }
