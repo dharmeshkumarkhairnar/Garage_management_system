@@ -5,7 +5,7 @@ type BFFAddVisitRecordsRequest struct {
 	MechanicId   string   `json:"mechanic_id" example:"firstname012" validate:"required,mechIDFormat"`
 	ArrivalDate  string   `json:"arrival_date" example:"2026-05-20" validate:"datetime=2006-01-02"`
 	DeliveryDate string   `json:"delivery_date" example:"2026-05-20" validate:"datetime=2006-01-02"`
-	Services     []string `json:"services" example:"painting,denting,oiling"`
+	Services     []string `json:"services" example:"painting,denting,oiling" validate:"required,serviceLength"`
 }
 
 type BFFAddVisitRecordsResponse struct {

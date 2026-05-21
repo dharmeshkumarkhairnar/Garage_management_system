@@ -10,6 +10,7 @@ const (
 	ArrivalDateFormatError               = "Arrival Date must be in format YYYY-MM-DD"
 	DeliveryDateFormatError              = "Delivery Date must be in format YYYY-MM-DD"
 	DeliveryDateError                    = "Delivery Date must be greater than or equal to Arrival Date"
+	ServicesLenghtError                  = "List of services cannot be empty"
 )
 
 // middleware errors

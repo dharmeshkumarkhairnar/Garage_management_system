@@ -58,4 +58,5 @@ const (
 	FieldMechanicID   = "MechanicId"
 	FieldArrivalDate  = "ArrivalDate"
 	FieldDeliveryDate = "DeliveryDate"
+	FieldServices     = "Services"
 )

@@ -24,6 +24,7 @@ definitions:
     required:
     - mechanic_id
     - number_plate
+    - services
     type: object
   models.BFFAddVisitRecordsResponse:
     properties:

@@ -43,6 +43,8 @@ func FormatValidationErrors(err error) ([]models.ErrorMessage, string) {
 				}
 			case Assestconst.FieldMechanicAadharNumber:
 				errorMsg = Assestconst.AadharFormatError
+			case VisitConst.FieldServices:
+				errorMsg = VisitConst.ServicesLenghtError
 			case VisitConst.FieldNumberPlate:
 				errorMsg = VisitConst.NumberPlateFormatError
 			case VisitConst.FieldMechanicID:
@@ -83,6 +85,14 @@ func aadharFormatValidator(f1 validator.FieldLevel) bool {
 	}
 	_, err := strconv.Atoi(aadhar)
 	if err != nil {
+		return false
+	}
+	return true
+}
+
+func serviceLengthValidator(f1 validator.FieldLevel) bool {
+	services := f1.Field().Interface().([]string)
+	if len(services) == 0 {
 		return false
 	}
 	return true
@@ -160,6 +170,7 @@ func init() {
 	bffValidator.RegisterValidation("aadharformat", aadharFormatValidator)
 	bffValidator.RegisterValidation("numPlateFormat", numberPlateFormatValidator)
 	bffValidator.RegisterValidation("mechIDFormat", mechanicIDFormatValidator)
+	bffValidator.RegisterValidation("serviceLength", serviceLengthValidator)
 	bffValidator.RegisterStructValidation(deliveryDateFormatValidator, ReqModel.BFFAddVisitRecordsRequest{})
 }
 
