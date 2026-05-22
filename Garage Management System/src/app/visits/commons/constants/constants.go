@@ -57,9 +57,14 @@ const (
 //validation
 const (
 	NumberPlateRegex = "^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$"
+	MechacnicIdRegex = "^[a-z]{1,32}[0-9]{3}$"
 )
 
 //database
 const (
-	FieldNumberPlate = "NumberPlate"
+	FieldNumberPlate  = "NumberPlate"
+	FieldMechanicID   = "MechanicId"
+	FieldArrivalDate  = "ArrivalDate"
+	FieldDeliveryDate = "DeliveryDate"
+	FieldServices     = "Services"
 )

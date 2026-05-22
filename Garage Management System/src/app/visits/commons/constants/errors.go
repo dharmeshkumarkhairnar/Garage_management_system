@@ -10,6 +10,11 @@ const (
 	ServiceNotFoundError                 = "services Not Found"
 	VisitRecordCreationFailedError       = "visit record creation failed"
 	SomeServicesNotAvailableError        = "Following services are not available: "
+	MechanicIDFormatError                = "Length of MechanicId must range between 1-32 followed by 3 digit numbers"
+	ArrivalDateFormatError               = "Arrival Date must be in format YYYY-MM-DD"
+	DeliveryDateFormatError              = "Delivery Date must be in format YYYY-MM-DD"
+	DeliveryDateError                    = "Delivery Date must be greater than or equal to Arrival Date"
+	ServicesLenghtError                  = "List of services cannot be empty"
 )
 
 // middleware errors

@@ -5,10 +5,13 @@ import (
 	Assestconst "garage_management_system/src/app/assets/commons/constants"
 	"garage_management_system/src/app/authentication/commons/constants"
 	VisitConst "garage_management_system/src/app/visits/commons/constants"
+	ReqModel "garage_management_system/src/app/visits/models"
 	"garage_management_system/src/models"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/dlclark/regexp2"
 	"github.com/go-playground/validator/v10"
@@ -40,8 +43,20 @@ func FormatValidationErrors(err error) ([]models.ErrorMessage, string) {
 				}
 			case Assestconst.FieldMechanicAadharNumber:
 				errorMsg = Assestconst.AadharFormatError
+			case VisitConst.FieldServices:
+				errorMsg = VisitConst.ServicesLenghtError
 			case VisitConst.FieldNumberPlate:
 				errorMsg = VisitConst.NumberPlateFormatError
+			case VisitConst.FieldMechanicID:
+				errorMsg = VisitConst.MechanicIDFormatError
+			case VisitConst.FieldArrivalDate:
+				errorMsg = VisitConst.ArrivalDateFormatError
+			case VisitConst.FieldDeliveryDate:
+				if err.Tag() == "gtefield" {
+					errorMsg = VisitConst.DeliveryDateError
+				} else {
+					errorMsg = VisitConst.DeliveryDateFormatError
+				}
 			default:
 				errorMsg = fmt.Sprintf(constants.ErrInvalidValue, err.Field())
 			}
@@ -73,6 +88,47 @@ func aadharFormatValidator(f1 validator.FieldLevel) bool {
 		return false
 	}
 	return true
+}
+
+func serviceLengthValidator(f1 validator.FieldLevel) bool {
+	services := f1.Field().Interface().([]string)
+	if len(services) == 0 {
+		return false
+	}
+	return true
+}
+
+func deliveryDateFormatValidator(s1 validator.StructLevel) {
+	request, ok := s1.Current().Interface().(ReqModel.BFFAddVisitRecordsRequest)
+	if !ok {
+		return
+	}
+
+	arrivalTime, err := time.Parse(time.DateOnly, request.ArrivalDate)
+	if err != nil {
+		return
+	}
+
+	deliveryTime, err := time.Parse(time.DateOnly, request.DeliveryDate)
+	if err != nil {
+		return
+	}
+
+	if deliveryTime.Before(arrivalTime) {
+		s1.ReportError(
+			reflect.ValueOf(request.DeliveryDate),
+			"DeliveryDate",
+			"delivery_date",
+			"gtefield",
+			"ArrivalDate",
+		)
+	}
+}
+
+func mechanicIDFormatValidator(f1 validator.FieldLevel) bool {
+	re := regexp2.MustCompile(VisitConst.MechacnicIdRegex, 0)
+	matched, _ := re.MatchString(f1.Field().String())
+	return matched
 }
 
 func numberPlateFormatValidator(f1 validator.FieldLevel) bool {
@@ -113,6 +169,9 @@ func init() {
 	bffValidator.RegisterValidation("Email", IsEmailValid)
 	bffValidator.RegisterValidation("aadharformat", aadharFormatValidator)
 	bffValidator.RegisterValidation("numPlateFormat", numberPlateFormatValidator)
+	bffValidator.RegisterValidation("mechIDFormat", mechanicIDFormatValidator)
+	bffValidator.RegisterValidation("serviceLength", serviceLengthValidator)
+	bffValidator.RegisterStructValidation(deliveryDateFormatValidator, ReqModel.BFFAddVisitRecordsRequest{})
 }
 
 func GetBFFValidator() *validator.Validate {

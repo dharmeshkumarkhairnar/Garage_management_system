@@ -131,7 +131,8 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "mechanic_id",
-                "number_plate"
+                "number_plate",
+                "services"
             ],
             "properties": {
                 "arrival_date": {

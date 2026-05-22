@@ -1,0 +1,13 @@
+package models
+
+type BFFAddVisitRecordsRequest struct {
+	NumberPlate  string   `json:"number_plate" example:"MH19BW3626" validate:"required,numPlateFormat"`
+	MechanicId   string   `json:"mechanic_id" example:"firstname012" validate:"required,mechIDFormat"`
+	ArrivalDate  string   `json:"arrival_date" example:"2026-05-20" validate:"datetime=2006-01-02"`
+	DeliveryDate string   `json:"delivery_date" example:"2026-05-20" validate:"datetime=2006-01-02"`
+	Services     []string `json:"services" example:"painting,denting,oiling" validate:"required,serviceLength"`
+}
+
+type BFFAddVisitRecordsResponse struct {
+	Status string `json:"status" example:"Visit Records Added Sucessfully"`
+}
