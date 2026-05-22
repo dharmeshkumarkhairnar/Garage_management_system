@@ -47,7 +47,7 @@ func GetRouter() *gin.Engine {
 
 	VisitsGroup := router.Group(constants.VisitsRoutePrefix)
 	{
-		VisitsGroup.POST(constants.AddVisitRecord, addVisitRecordsHandler.AddVisitRecord)
+		VisitsGroup.POST(constants.AddVisitRecord, middleware.VisitMiddleware(), addVisitRecordsHandler.AddVisitRecord)
 	}
 
 	return router

@@ -68,7 +68,7 @@ const docTemplate = `{
             }
         },
         "/api/mechanics/delete": {
-            "post": {
+            "delete": {
                 "description": "Handles mechanic Delete request by validating input.",
                 "consumes": [
                     "application/json"
@@ -257,6 +257,10 @@ const docTemplate = `{
         "models.BFFAddMechanicResponse": {
             "type": "object",
             "properties": {
+                "mechanic_id": {
+                    "type": "string",
+                    "example": "arijit777"
+                },
                 "status": {
                     "type": "string",
                     "example": "Successfully added"
@@ -293,12 +297,12 @@ const docTemplate = `{
         "models.BFFDeleteMechanicRequest": {
             "type": "object",
             "required": [
-                "aadhar_number"
+                "mechanic_id"
             ],
             "properties": {
-                "aadhar_number": {
+                "mechanic_id": {
                     "type": "string",
-                    "example": "112233445566"
+                    "example": "arijit709"
                 }
             }
         },

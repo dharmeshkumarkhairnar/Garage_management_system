@@ -5,9 +5,11 @@ import (
 	"garage_management_system/src/app/visits/business"
 	"garage_management_system/src/app/visits/commons/constants"
 	visitModels "garage_management_system/src/app/visits/models"
+	"garage_management_system/src/models"
 	commonModels "garage_management_system/src/models"
 	"garage_management_system/src/utils/validations"
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,9 +24,9 @@ func NewAddVisitRecordHandler(service *business.AddVisitRecordService) *AddVisit
 	}
 }
 
-// HandlerCreaterVehicle handles the Vehicle creation request.
-// @Summary Create a new Vehicle
-// @Description Handles Vehicle registration by validating input and storing Vehicle details
+// HandlerAddVisitRecord handles the visit addition request.
+// @Summary Create a new visit record
+// @Description Handles visit addition request by validating input and storing visit details
 // @Tags Visits
 // @Accept json
 // @Produce json
@@ -32,7 +34,6 @@ func NewAddVisitRecordHandler(service *business.AddVisitRecordService) *AddVisit
 // @Success 201 {object} models.BFFAddVisitRecordsResponse "User created successfully"
 // @Failure 400 {object} models.ErrorAPIResponse "Invalid input payload"
 // @Failure 404 {object} models.ErrorAPIResponse "User not found"
-// @Failure 409 {object} models.ErrorAPIResponse "Duplicate value in request"
 // @Failure 500 {object} models.ErrorAPIResponse "Internal Server Error"
 // @Router /api/visits/add-record [post]
 func (controller *AddVisitRecordHandler) AddVisitRecord(ctx *gin.Context) {
@@ -56,26 +57,42 @@ func (controller *AddVisitRecordHandler) AddVisitRecord(ctx *gin.Context) {
 
 	err := controller.service.AddVisitRecord(ctx, ctx.Request.Context(), bffAddVisitRecordsRequest)
 	if err != nil {
-		// if strings.Contains(err.Error(), constants.VehicleNumberPlateAlreadyExistsError) {
-		// 	errorMsg := models.ErrorMessage{Key: "number plate", ErrorMessage: constants.VehicleNumberPlateAlreadyExistsError}
-		// 	errorResponse := commonModels.ErrorAPIResponse{
-		// 		Message: errorMsg,
-		// 		Error:   constants.VehicleCreationFailedError,
-		// 	}
-		// 	ctx.IndentedJSON(http.StatusConflict, errorResponse)
-		// 	return
-		// } else if strings.Contains(err.Error(), constants.UserNotFoundError) {
-		// 	errorMsg := models.ErrorMessage{Key: "user", ErrorMessage: constants.UserNotFoundError}
-		// 	errorResponse := commonModels.ErrorAPIResponse{
-		// 		Message: errorMsg,
-		// 		Error:   constants.VehicleCreationFailedError,
-		// 	}
-		// 	ctx.IndentedJSON(http.StatusNotFound, errorResponse)
-		// 	return
-		// }
+		if strings.Contains(err.Error(), constants.VehicleNotFoundError) {
+			errorMsg := models.ErrorMessage{Key: constants.Vehicle, ErrorMessage: constants.VehicleNotFoundError}
+			errorResponse := commonModels.ErrorAPIResponse{
+				Message: errorMsg,
+				Error:   constants.VisitRecordCreationFailedError,
+			}
+			ctx.IndentedJSON(http.StatusNotFound, errorResponse)
+			return
+		} else if strings.Contains(err.Error(), constants.MechanicNotFoundError) {
+			errorMsg := models.ErrorMessage{Key: constants.Mechanic, ErrorMessage: constants.MechanicNotFoundError}
+			errorResponse := commonModels.ErrorAPIResponse{
+				Message: errorMsg,
+				Error:   constants.VisitRecordCreationFailedError,
+			}
+			ctx.IndentedJSON(http.StatusNotFound, errorResponse)
+			return
+		} else if strings.Contains(err.Error(), constants.ServiceNotFoundError) {
+			errorMsg := models.ErrorMessage{Key: constants.Services, ErrorMessage: constants.ServiceNotFoundError}
+			errorResponse := commonModels.ErrorAPIResponse{
+				Message: errorMsg,
+				Error:   constants.VisitRecordCreationFailedError,
+			}
+			ctx.IndentedJSON(http.StatusNotFound, errorResponse)
+			return
+		} else if strings.Contains(err.Error(), constants.SomeServicesNotAvailableError) {
+			errorMsg := models.ErrorMessage{Key: constants.Services, ErrorMessage: err.Error()}
+			errorResponse := commonModels.ErrorAPIResponse{
+				Message: errorMsg,
+				Error:   constants.VisitRecordCreationFailedError,
+			}
+			ctx.IndentedJSON(http.StatusBadRequest, errorResponse)
+			return
+		}
 
 		errorResponse := commonModels.ErrorAPIResponse{
-			Error: constants.VehicleCreationFailedError,
+			Error: constants.VisitRecordCreationFailedError,
 		}
 		ctx.IndentedJSON(http.StatusInternalServerError, errorResponse)
 		return

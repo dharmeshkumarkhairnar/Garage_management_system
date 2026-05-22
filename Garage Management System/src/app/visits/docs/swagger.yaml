@@ -15,9 +15,9 @@ definitions:
         type: string
       services:
         example:
-        - '[painting'
+        - painting
         - denting
-        - oiling]
+        - oiling
         items:
           type: string
         type: array
@@ -109,8 +109,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: Handles Vehicle registration by validating input and storing Vehicle
-        details
+      description: Handles visit addition request by validating input and storing
+        visit details
       parameters:
       - description: Vehicle Registration Request
         in: body
@@ -133,15 +133,11 @@ paths:
           description: User not found
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
-        "409":
-          description: Duplicate value in request
-          schema:
-            $ref: '#/definitions/models.ErrorAPIResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
-      summary: Create a new Vehicle
+      summary: Create a new visit record
       tags:
       - Visits
 swagger: "2.0"

@@ -75,7 +75,7 @@ const docTemplate = `{
         },
         "/api/visits/add-record": {
             "post": {
-                "description": "Handles Vehicle registration by validating input and storing Vehicle details",
+                "description": "Handles visit addition request by validating input and storing visit details",
                 "consumes": [
                     "application/json"
                 ],
@@ -85,7 +85,7 @@ const docTemplate = `{
                 "tags": [
                     "Visits"
                 ],
-                "summary": "Create a new Vehicle",
+                "summary": "Create a new visit record",
                 "parameters": [
                     {
                         "description": "Vehicle Registration Request",
@@ -112,12 +112,6 @@ const docTemplate = `{
                     },
                     "404": {
                         "description": "User not found",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrorAPIResponse"
-                        }
-                    },
-                    "409": {
-                        "description": "Duplicate value in request",
                         "schema": {
                             "$ref": "#/definitions/models.ErrorAPIResponse"
                         }
@@ -162,9 +156,9 @@ const docTemplate = `{
                         "type": "string"
                     },
                     "example": [
-                        "[painting",
+                        "painting",
                         "denting",
-                        "oiling]"
+                        "oiling"
                     ]
                 }
             }

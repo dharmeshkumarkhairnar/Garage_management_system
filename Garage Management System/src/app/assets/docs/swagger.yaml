@@ -19,6 +19,9 @@ definitions:
     type: object
   models.BFFAddMechanicResponse:
     properties:
+      mechanic_id:
+        example: arijit777
+        type: string
       status:
         example: Successfully added
         type: string
@@ -44,11 +47,11 @@ definitions:
     type: object
   models.BFFDeleteMechanicRequest:
     properties:
-      aadhar_number:
-        example: "112233445566"
+      mechanic_id:
+        example: arijit709
         type: string
     required:
-    - aadhar_number
+    - mechanic_id
     type: object
   models.BFFDeleteMechanicResponse:
     properties:
@@ -127,7 +130,7 @@ paths:
       tags:
       - Mechanics
   /api/mechanics/delete:
-    post:
+    delete:
       consumes:
       - application/json
       description: Handles mechanic Delete request by validating input.

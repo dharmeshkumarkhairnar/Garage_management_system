@@ -6,6 +6,10 @@ const (
 	UserNotFoundError                    = "user not found"
 	NumberPlateFormatError               = "Number Plate must be in `MH19BW3626` format"
 	VehicleNotFoundError                 = "Vehicle Not Found"
+	MechanicNotFoundError                = "mechanic Not Found"
+	ServiceNotFoundError                 = "services Not Found"
+	VisitRecordCreationFailedError       = "visit record creation failed"
+	SomeServicesNotAvailableError        = "Following services are not available: "
 )
 
 // middleware errors

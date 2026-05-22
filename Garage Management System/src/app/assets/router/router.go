@@ -55,7 +55,7 @@ func GetRouter() *gin.Engine {
 	Mechanics := router.Group(constants.MechanicRoutePrefix)
 	{
 		Mechanics.POST(constants.AddMechanic, middleware.AssetMiddleware(), addMechanicHandler.AddMechanic)
-		Mechanics.POST(constants.DeleteMechanic, middleware.AssetMiddleware(), deleteMechanicHandler.DeleteMechanic)
+		Mechanics.DELETE(constants.DeleteMechanic, middleware.AssetMiddleware(), deleteMechanicHandler.DeleteMechanic)
 	}
 
 	Services := router.Group(constants.ServiceRoutePrefix)

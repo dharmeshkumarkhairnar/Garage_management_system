@@ -18,16 +18,16 @@ type Users struct {
 
 type Vehicles struct {
 	ID          uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
-	CustomerID  uint64    `gorm:"column:customer_id" json:"customer_id"`
+	UserID      uint64    `gorm:"column:user_id" json:"user_id"`
 	NumberPlate string    `gorm:"column:number_plate;uniqueIndex" json:"number_plate"`
 	Model       string    `gorm:"column:model" json:"model"`
 	Created_at  time.Time `gorm:"column:created_at" json:"created_at"`
 
-	CustId Users `gorm:"foreignkey:CustomerID;references:ID"`
+	UId Users `gorm:"foreignkey:UserID;references:ID"`
 }
 
 type Mechanics struct {
-	MechID       string    `gorm:"column:mechID;primarykey" json:"id"`
+	MechID       string    `gorm:"column:mech_id;primarykey" json:"mech_id"`
 	Name         string    `gorm:"column:name" json:"name"`
 	AadharNumber string    `gorm:"column:aadhar_number;uniqueIndex" json:"aadhar_number"`
 	Phone        uint64    `gorm:"column:phoneNumber" json:"phoneNumber"`
@@ -43,7 +43,7 @@ type ServiceMaster struct {
 type VisitRecords struct {
 	ID           uint64    `gorm:"column:id;primarykey;autoIncrement" json:"id"`
 	VehicleID    uint64    `gorm:"column:vehicle_id" json:"vehicle_id"`
-	MechanicID   string    `gorm:"column:mechID" json:"mechID"`
+	MechanicID   string    `gorm:"column:mech_id" json:"mech_id"`
 	ArrivalDate  time.Time `gorm:"column:arrival_date;type:date" json:"arrival_date"`
 	DeliveryDate time.Time `gorm:"column:delivery_date;type:date;check:delivery_date>=arrival_date" json:"delivery_date"`
 

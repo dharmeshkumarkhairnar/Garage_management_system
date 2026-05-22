@@ -30,8 +30,8 @@ func (repo *addMechanicRepository) AddMechanic(ctx context.Context, mechanic_id 
 	logger := logrus.New()
 
 	NewMechanic := genModels.Mechanics{
-		MechID: mechanic_id,
-		Name:         bffAddMechaniceRequest.Name,
+		MechID:       mechanic_id,
+		Name:         strings.ToLower(bffAddMechaniceRequest.Name),
 		AadharNumber: bffAddMechaniceRequest.AadharNumber,
 		Phone:        bffAddMechaniceRequest.PhoneNumber,
 		Created_at:   time.Now(),

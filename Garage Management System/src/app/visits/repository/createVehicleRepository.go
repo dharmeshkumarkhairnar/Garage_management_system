@@ -30,9 +30,9 @@ func (user *createVehicleRepository) CreateVehicle(ctx context.Context, userID u
 	logger := logrus.New()
 
 	NewVehicle := genModels.Vehicles{
-		CustomerID:  userID,
+		UserID:  userID,
 		NumberPlate: bffCreateVehicleRequest.NumberPlate,
-		Model:       bffCreateVehicleRequest.Model,
+		Model:       strings.ToLower(bffCreateVehicleRequest.Model),
 		Created_at:  time.Now(),
 	}
 

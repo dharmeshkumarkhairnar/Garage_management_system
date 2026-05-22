@@ -33,11 +33,27 @@ func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 	logger := logrus.New()
 
 	var vehicles genericModels.Vehicles
+	var mechanic genModels.Mechanics
 
 	err := repo.gDB.WithContext(ctx).Table(constants.VehiclesTableName).Where(constants.NumberPlate, bffAddVisitRecordsRequest.NumberPlate).First(&vehicles).Error
 	if err != nil {
-		return nil, errors.New(constants.VehicleNotFoundError)
+		logger.Error("error in getting the vehicle record")
+		if err == gorm.ErrRecordNotFound {
+			return nil, errors.New(constants.VehicleNotFoundError)
+		}
+		return nil, err
 	}
+	logger.Info("Vehicle ID fetched successfully")
+
+	err = repo.gDB.WithContext(ctx).Table(constants.MechanicsTableName).Where(constants.MechIDCondition, bffAddVisitRecordsRequest.MechanicId).First(&mechanic).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			logger.Error("error in getting the mechanic record")
+			return nil, errors.New(constants.MechanicNotFoundError)
+		}
+		return nil, err
+	}
+	logger.Info("mechanic record fetched successfully")
 
 	arrivalTime, _ := time.Parse(time.DateOnly, bffAddVisitRecordsRequest.ArrivalDate)
 	deliveryTime, _ := time.Parse(time.DateOnly, bffAddVisitRecordsRequest.DeliveryDate)
@@ -51,7 +67,8 @@ func (repo *addVisitRecordsRepository) AddVisitRecords(ctx context.Context, bffA
 
 	result := repo.gDB.WithContext(ctx).Clauses(clause.Returning{}).Table(constants.VisitRecordTableName).Create(&VisitRecord)
 	if result.Error != nil {
-		return nil, errors.New("Database Insertion Error")
+		logger.Error("error in creating the visit record")
+		return nil, result.Error
 	}
 
 	logger.Info("Visit Records Added Successfully")
@@ -66,14 +83,20 @@ func (repo *addVisitRecordsRepository) GetServiceIds(ctx context.Context, bffAdd
 
 	err := repo.gDB.WithContext(ctx).
 		Table(constants.ServiceMasterTableName).
-		Where("service IN ?", bffAddVisitRecordsRequest.Services). // Matches all names in the list
+		Where(constants.ServiceIDINCondition, bffAddVisitRecordsRequest.Services).
 		Find(&services).Error
 
 	if err != nil {
-		return nil, errors.New("Record Not Found")
+		logger.Error("error in fetching service records")
+		return nil, err
 	}
 
-	logger.Info("Visit ServiceId Fetched Successfully")
+	if len(services) == 0 {
+		logger.Error("empty slice: No records found")
+		return nil, errors.New(constants.ServiceNotFoundError)
+	}
+
+	logger.Info("Visit Services Fetched Successfully")
 	return &services, nil
 }
 
@@ -85,7 +108,8 @@ func (repo *addVisitRecordsRepository) AddVisitServices(ctx context.Context, dat
 		Table(constants.VisitServiceTableName).Create(data).Error
 
 	if err != nil {
-		return errors.New("Record Not Found")
+		logger.Error("error in creating the visit service record")
+		return err
 	}
 
 	logger.Info("Visit services addded Successfully")

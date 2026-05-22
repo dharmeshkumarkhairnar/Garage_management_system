@@ -6,6 +6,9 @@ const (
 	VisitRecordTableName   = "visit_records"
 	VisitServiceTableName  = "visit_services"
 	ServiceMasterTableName = "service_masters"
+	MechanicsTableName     = "mechanics"
+	VisitRecordID          = "visit_record_id"
+	ServiceMasterID        = "service_master_id"
 )
 
 //Success
@@ -28,8 +31,13 @@ const (
 
 //constants
 const (
-	User        = "user"
-	NumberPlate = "number_plate = ?"
+	User                 = "user"
+	NumberPlate          = "number_plate = ?"
+	Vehicle              = "vehicle"
+	Mechanic             = "mechanic"
+	Services             = "services"
+	MechIDCondition      = "mech_id = ?"
+	ServiceIDINCondition = "service IN ?"
 )
 
 //middlware constants

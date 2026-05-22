@@ -113,7 +113,7 @@ const (
 //database
 const (
 	AadharNumberCondition = "aadhar_number = ?"
-	MechIDCondition = "\"mechID\" = ?"
+	MechIDCondition       = "mech_id = ?"
 )
 
 //constant errors from Database
