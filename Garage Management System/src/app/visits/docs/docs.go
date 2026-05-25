@@ -124,6 +124,58 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/visits/get-bill": {
+            "post": {
+                "description": "Handles generation of bill for the respective visit",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Visits"
+                ],
+                "summary": "Generate Bill for the Visit",
+                "parameters": [
+                    {
+                        "description": "Bill Generation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFGenerateBillRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Bill Generated Successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFGenerateBillResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -196,6 +248,29 @@ const docTemplate = `{
                 "status": {
                     "type": "string",
                     "example": "Successfully Created"
+                }
+            }
+        },
+        "models.BFFGenerateBillRequest": {
+            "type": "object",
+            "required": [
+                "visit_id"
+            ],
+            "properties": {
+                "visit_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.BFFGenerateBillResponse": {
+            "type": "object",
+            "properties": {
+                "bill_amount": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "Bill Generated Sucessfully"
                 }
             }
         },

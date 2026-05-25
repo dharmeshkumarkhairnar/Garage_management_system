@@ -32,22 +32,27 @@ func GetRouter() *gin.Engine {
 		AllowHeaders:    []string{"Authorization", "Content-type", "Origin"},
 	}))
 
-	createVehicleRepository := repository.NewCreateVehicleRepository(gdb)
-	createVehicleService := business.NewCreateVehicleService(createVehicleRepository)
-	createVehicleHandler := handlers.NewCreateVehicleHandler(createVehicleService)
+	// createVehicleRepository := repository.NewCreateVehicleRepository(gdb)
+	// createVehicleService := business.NewCreateVehicleService(createVehicleRepository)
+	// createVehicleHandler := handlers.NewCreateVehicleHandler(createVehicleService)
 
 	addVisitRecordsRepository := repository.NewAddVisitRecordsRepository(gdb)
 	addVisitRecordsService := business.NewAddVisitRecordService(addVisitRecordsRepository)
 	addVisitRecordsHandler := handlers.NewAddVisitRecordHandler(addVisitRecordsService)
 
-	VGroup := router.Group(constants.VehiclesRoutePrefix)
-	{
-		VGroup.POST(constants.CreateVehicle, middleware.VisitMiddleware(), createVehicleHandler.CreateVehicle)
-	}
+	getBillRepository := repository.NewGenerateBillRepository(gdb)
+	getBillService := business.NewGenerateBillervice(getBillRepository)
+	getBillHandler := handlers.NewGenerateBillHandler(getBillService)
+
+	// VGroup := router.Group(constants.VehiclesRoutePrefix)
+	// {
+	// 	VGroup.POST(constants.CreateVehicle, middleware.VisitMiddleware(), createVehicleHandler.CreateVehicle)
+	// }
 
 	VisitsGroup := router.Group(constants.VisitsRoutePrefix)
 	{
 		VisitsGroup.POST(constants.AddVisitRecord, middleware.VisitMiddleware(), addVisitRecordsHandler.AddVisitRecord)
+		VisitsGroup.POST(constants.GenerateBill, getBillHandler.GenerateBill)
 	}
 
 	return router

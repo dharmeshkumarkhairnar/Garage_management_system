@@ -50,6 +50,21 @@ definitions:
         example: Successfully Created
         type: string
     type: object
+  models.BFFGenerateBillRequest:
+    properties:
+      visit_id:
+        type: integer
+    required:
+    - visit_id
+    type: object
+  models.BFFGenerateBillResponse:
+    properties:
+      bill_amount:
+        type: number
+      status:
+        example: Bill Generated Sucessfully
+        type: string
+    type: object
   models.ErrorAPIResponse:
     properties:
       error:
@@ -139,6 +154,40 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrorAPIResponse'
       summary: Create a new visit record
+      tags:
+      - Visits
+  /api/visits/get-bill:
+    post:
+      consumes:
+      - application/json
+      description: Handles generation of bill for the respective visit
+      parameters:
+      - description: Bill Generation Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.BFFGenerateBillRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Bill Generated Successfully
+          schema:
+            $ref: '#/definitions/models.BFFGenerateBillResponse'
+        "400":
+          description: Invalid input payload
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorAPIResponse'
+      summary: Generate Bill for the Visit
       tags:
       - Visits
 swagger: "2.0"

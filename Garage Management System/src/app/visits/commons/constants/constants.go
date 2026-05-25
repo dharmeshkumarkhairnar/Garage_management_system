@@ -14,6 +14,7 @@ const (
 //Success
 const (
 	VehicleCreationSuccess     = "vehicle created successfully"
+	BillGenerationSuccess      = "Bill Generated Successfully"
 	VisitRecordCreationSuccess = "visit record created successfully"
 )
 
@@ -62,9 +63,10 @@ const (
 
 //database
 const (
-	FieldNumberPlate  = "NumberPlate"
-	FieldMechanicID   = "MechanicId"
-	FieldArrivalDate  = "ArrivalDate"
-	FieldDeliveryDate = "DeliveryDate"
-	FieldServices     = "Services"
+	FieldNumberPlate   = "NumberPlate"
+	FieldMechanicID    = "MechanicId"
+	FieldArrivalDate   = "ArrivalDate"
+	FieldDeliveryDate  = "DeliveryDate"
+	FieldServices      = "Services"
+	FieldVisitRecordID = "visit_record_id"
 )

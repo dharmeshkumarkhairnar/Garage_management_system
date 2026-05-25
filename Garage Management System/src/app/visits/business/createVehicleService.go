@@ -25,5 +25,6 @@ func (service *CreateVehicleService) CreateVehicle(ctx context.Context, userID u
 	}
 
 	return nil
-
 }
+
+

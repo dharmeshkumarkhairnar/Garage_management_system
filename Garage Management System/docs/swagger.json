@@ -1,0 +1,900 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "description": "Authenticates user and returns JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login registered user or admin",
+                "parameters": [
+                    {
+                        "description": "User Sign In Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exist",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLoginUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Logouts user by deleting token from redis",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logout registered user or admin",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLogoutUserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFLogoutUserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "description": "Handles customer registration by validating input and storing user details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new customer",
+                "parameters": [
+                    {
+                        "description": "Customer Registration Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFCreateCustomerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Customer created successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_authentication_models.ErrorAPIResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_authentication_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_authentication_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/mechanics/add": {
+            "post": {
+                "description": "Handles mechanic add request by validating input and storing mechanics details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mechanics"
+                ],
+                "summary": "Adds new mechanic",
+                "parameters": [
+                    {
+                        "description": "mechanic add Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddMechanicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "mechanic added successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddMechanicResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorAPIResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Duplicate value in request",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/mechanics/delete": {
+            "delete": {
+                "description": "Handles mechanic Delete request by validating input.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mechanics"
+                ],
+                "summary": "Delete mechanic",
+                "parameters": [
+                    {
+                        "description": "mechanic Delete Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteMechanicRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "mechanic Deleted successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteMechanicResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/add": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Adds a new service to the DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Add a new service",
+                "parameters": [
+                    {
+                        "description": "Add Service Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Added service successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized role",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Service already exists",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddNewServiceResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/delete": {
+            "delete": {
+                "description": "Deletes an existing service from the DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Delete an existing service",
+                "parameters": [
+                    {
+                        "description": "Delete Service Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted service successful",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized role",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFDeleteServiceResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicles/create-vehicle": {
+            "post": {
+                "description": "Handles Vehicle registration by validating input and storing Vehicle details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Create a new Vehicle",
+                "parameters": [
+                    {
+                        "description": "Vehicle Registration Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFCreateVehicleRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFCreateVehicleResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Duplicate value in request",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/visits/add-record": {
+            "post": {
+                "description": "Handles visit addition request by validating input and storing visit details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Visits"
+                ],
+                "summary": "Create a new visit record",
+                "parameters": [
+                    {
+                        "description": "Vehicle Registration Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddVisitRecordsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFAddVisitRecordsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/visits/get-bill": {
+            "post": {
+                "description": "Handles generation of bill for the respective visit",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Visits"
+                ],
+                "summary": "Generate Bill for the Visit",
+                "parameters": [
+                    {
+                        "description": "Bill Generation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFGenerateBillRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Bill Generated Successfully",
+                        "schema": {
+                            "$ref": "#/definitions/models.BFFGenerateBillResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input payload",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_visits_models.ErrorAPIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_visits_models.ErrorAPIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/garage_management_system_src_app_visits_models.ErrorAPIResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "garage_management_system_src_app_assets_models.ErrorAPIResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "errors": {
+                    "$ref": "#/definitions/garage_management_system_src_app_assets_models.ErrorMessage"
+                }
+            }
+        },
+        "garage_management_system_src_app_assets_models.ErrorMessage": {
+            "type": "object",
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "garage_management_system_src_app_authentication_models.ErrorAPIResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "errors": {
+                    "$ref": "#/definitions/garage_management_system_src_app_authentication_models.ErrorMessage"
+                }
+            }
+        },
+        "garage_management_system_src_app_authentication_models.ErrorMessage": {
+            "type": "object",
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "garage_management_system_src_app_visits_models.ErrorAPIResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "errors": {
+                    "$ref": "#/definitions/garage_management_system_src_app_visits_models.ErrorMessage"
+                }
+            }
+        },
+        "garage_management_system_src_app_visits_models.ErrorMessage": {
+            "type": "object",
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "garage_management_system_src_models.ErrorAPIResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "errors": {
+                    "$ref": "#/definitions/garage_management_system_src_models.ErrorMessage"
+                }
+            }
+        },
+        "garage_management_system_src_models.ErrorMessage": {
+            "type": "object",
+            "properties": {
+                "errorMessage": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.BFFAddMechanicRequest": {
+            "type": "object",
+            "required": [
+                "aadhar_number",
+                "name",
+                "phoneNumber"
+            ],
+            "properties": {
+                "aadhar_number": {
+                    "type": "string",
+                    "example": "112233445566"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Mukesh Roy"
+                },
+                "phoneNumber": {
+                    "type": "integer",
+                    "maximum": 9999999999,
+                    "minimum": 1000000000,
+                    "example": 8432805566
+                }
+            }
+        },
+        "models.BFFAddMechanicResponse": {
+            "type": "object",
+            "properties": {
+                "mechanic_id": {
+                    "type": "string",
+                    "example": "arijit777"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "Successfully added"
+                }
+            }
+        },
+        "models.BFFAddNewServiceRequest": {
+            "type": "object",
+            "required": [
+                "service"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "number",
+                    "minimum": 99,
+                    "example": 1745.99
+                },
+                "service": {
+                    "type": "string",
+                    "minLength": 3,
+                    "example": "painting"
+                }
+            }
+        },
+        "models.BFFAddNewServiceResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "service added successfully"
+                }
+            }
+        },
+        "models.BFFAddVisitRecordsRequest": {
+            "type": "object",
+            "required": [
+                "mechanic_id",
+                "number_plate",
+                "services"
+            ],
+            "properties": {
+                "arrival_date": {
+                    "type": "string",
+                    "example": "2026-05-20"
+                },
+                "delivery_date": {
+                    "type": "string",
+                    "example": "2026-05-20"
+                },
+                "mechanic_id": {
+                    "type": "string",
+                    "example": "firstname012"
+                },
+                "number_plate": {
+                    "type": "string",
+                    "example": "MH19BW3626"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "painting",
+                        "denting",
+                        "oiling"
+                    ]
+                }
+            }
+        },
+        "models.BFFAddVisitRecordsResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "Visit Records Added Sucessfully"
+                }
+            }
+        },
+        "models.BFFCreateCustomerRequest": {
+            "type": "object",
+            "required": [
+                "confirmPassword",
+                "customerName",
+                "email",
+                "password",
+                "phoneNumber"
+            ],
+            "properties": {
+                "confirmPassword": {
+                    "type": "string",
+                    "minLength": 8,
+                    "example": "Admin@123"
+                },
+                "customerName": {
+                    "type": "string",
+                    "maxLength": 32,
+                    "minLength": 5,
+                    "example": "Arjit"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "arijit@gmail.com"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 8,
+                    "example": "Admin@123"
+                },
+                "phoneNumber": {
+                    "type": "integer",
+                    "maximum": 9999999999,
+                    "minimum": 1000000000,
+                    "example": 7568912340
+                }
+            }
+        },
+        "models.BFFCreateVehicleRequest": {
+            "type": "object",
+            "required": [
+                "model",
+                "number_plate"
+            ],
+            "properties": {
+                "model": {
+                    "type": "string",
+                    "example": "Dezire"
+                },
+                "number_plate": {
+                    "type": "string",
+                    "example": "MH19BW3626"
+                }
+            }
+        },
+        "models.BFFCreateVehicleResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "Successfully Created"
+                }
+            }
+        },
+        "models.BFFDeleteMechanicRequest": {
+            "type": "object",
+            "required": [
+                "mechanic_id"
+            ],
+            "properties": {
+                "mechanic_id": {
+                    "type": "string",
+                    "example": "arijit709"
+                }
+            }
+        },
+        "models.BFFDeleteMechanicResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "Successfully deleted"
+                }
+            }
+        },
+        "models.BFFDeleteServiceRequest": {
+            "type": "object",
+            "required": [
+                "service"
+            ],
+            "properties": {
+                "service": {
+                    "type": "string",
+                    "minLength": 3,
+                    "example": "painting"
+                }
+            }
+        },
+        "models.BFFDeleteServiceResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "service deleted successfully"
+                }
+            }
+        },
+        "models.BFFGenerateBillRequest": {
+            "type": "object",
+            "required": [
+                "number_plate"
+            ],
+            "properties": {
+                "number_plate": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.BFFGenerateBillResponse": {
+            "type": "object",
+            "properties": {
+                "bill_amount": {
+                    "type": "number"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "Bill Generated Sucessfully"
+                }
+            }
+        },
+        "models.BFFLoginUserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "role"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "Admin@123"
+                },
+                "role": {
+                    "type": "string",
+                    "example": "customer or admin"
+                }
+            }
+        },
+        "models.BFFLoginUserResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "user logged in successfully"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.BFFLogoutUserResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "user logged out successfully"
+                }
+            }
+        }
+    }
+}
