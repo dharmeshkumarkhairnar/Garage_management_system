@@ -32,9 +32,9 @@ func GetRouter() *gin.Engine {
 		AllowHeaders:    []string{"Authorization", "Content-type", "Origin"},
 	}))
 
-	// createVehicleRepository := repository.NewCreateVehicleRepository(gdb)
-	// createVehicleService := business.NewCreateVehicleService(createVehicleRepository)
-	// createVehicleHandler := handlers.NewCreateVehicleHandler(createVehicleService)
+	createVehicleRepository := repository.NewCreateVehicleRepository(gdb)
+	createVehicleService := business.NewCreateVehicleService(createVehicleRepository)
+	createVehicleHandler := handlers.NewCreateVehicleHandler(createVehicleService)
 
 	addVisitRecordsRepository := repository.NewAddVisitRecordsRepository(gdb)
 	addVisitRecordsService := business.NewAddVisitRecordService(addVisitRecordsRepository)
@@ -44,10 +44,10 @@ func GetRouter() *gin.Engine {
 	getBillService := business.NewGenerateBillervice(getBillRepository)
 	getBillHandler := handlers.NewGenerateBillHandler(getBillService)
 
-	// VGroup := router.Group(constants.VehiclesRoutePrefix)
-	// {
-	// 	VGroup.POST(constants.CreateVehicle, middleware.VisitMiddleware(), createVehicleHandler.CreateVehicle)
-	// }
+	VGroup := router.Group(constants.VehiclesRoutePrefix)
+	{
+		VGroup.POST(constants.CreateVehicle, middleware.VisitMiddleware(), createVehicleHandler.CreateVehicle)
+	}
 
 	VisitsGroup := router.Group(constants.VisitsRoutePrefix)
 	{
